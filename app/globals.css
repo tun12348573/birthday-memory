@@ -2939,11 +2939,8 @@ p {
 
 @media (max-width: 768px) {
   .music-player {
-    right: 15px;
-    bottom: 15px;
-
-    width: 68px;
-    height: 68px;
+    right: 14px;
+    bottom: calc(90px + env(safe-area-inset-bottom));
   }
 
   .vinyl-disc {
@@ -3448,4 +3445,42 @@ p {
 
   object-fit: cover;
   object-position: center;
+}
+
+/* =========================================
+   FIX MUSIC PLAYER CHE NÚT ALBUM TRÊN MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .music-player {
+    right: 16px;
+
+    /* đẩy đĩa nhạc lên khỏi hàng nút Trang trước / Trang sau */
+    bottom: 95px;
+
+    width: 64px;
+    height: 64px;
+  }
+
+  .vinyl-disc {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+
+/* iPhone nhỏ */
+@media (max-width: 420px) {
+  .music-player {
+    right: 12px;
+    bottom: 90px;
+
+    width: 58px;
+    height: 58px;
+  }
+
+  .vinyl-disc {
+    width: 43px;
+    height: 43px;
+  }
 }
