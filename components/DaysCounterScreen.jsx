@@ -92,7 +92,7 @@ export default function DaysCounterScreen({ onContinue, onBack }) {
   return (
     <section ref={screenRef} className="days-counter-screen">
       <button className="counter-back-button" type="button" onClick={onBack}>
-        ← Album
+        ← Một số lá thư cho em
       </button>
 
       <div className="days-counter-card">

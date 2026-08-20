@@ -6,6 +6,7 @@ import gsap from "gsap";
 import LockScreen from "../components/LockScreen";
 import LetterScreen from "../components/LetterScreen";
 import AlbumScreen from "../components/AlbumScreen";
+import OpenWhenScreen from "../components/OpenWhenScreen";
 import DaysCounterScreen from "../components/DaysCounterScreen";
 import FinalScreen from "../components/FinalScreen";
 import FloatingDecor from "../components/FloatingDecor";
@@ -68,7 +69,7 @@ export default function Home() {
         onComplete: () => {
           setIsTransitioning(false);
         },
-      }
+      },
     );
   }, [stage]);
 
@@ -85,9 +86,7 @@ export default function Home() {
       await audio.play();
       setIsPlaying(true);
     } catch (error) {
-      console.log(
-        "Trình duyệt chưa cho phép phát nhạc tự động."
-      );
+      console.log("Trình duyệt chưa cho phép phát nhạc tự động.");
     }
   };
 
@@ -145,12 +144,7 @@ export default function Home() {
   return (
     <main className="app-shell">
       {/* Audio nằm ngoài stage nên không reset khi chuyển màn hình */}
-      <audio
-        ref={audioRef}
-        src="/music/background.mp3"
-        preload="auto"
-        loop
-      />
+      <audio ref={audioRef} src="/music/background.mp3" preload="auto" loop />
 
       <MusicPlayer
         audioRef={audioRef}
@@ -174,10 +168,7 @@ export default function Home() {
 
       {/* Chặn double click trong lúc animation */}
       {isTransitioning && (
-        <div
-          className="transition-click-blocker"
-          aria-hidden="true"
-        />
+        <div className="transition-click-blocker" aria-hidden="true" />
       )}
 
       <div
@@ -185,26 +176,27 @@ export default function Home() {
         key={stage}
         className={`screen-layer cinematic-stage stage-${stage}`}
       >
-        {stage === "lock" && (
-          <LockScreen onUnlocked={handleUnlocked} />
-        )}
+        {stage === "lock" && <LockScreen onUnlocked={handleUnlocked} />}
 
         {stage === "letter" && (
-          <LetterScreen
-            onOpenAlbum={() => transitionTo("album")}
-          />
+          <LetterScreen onOpenAlbum={() => transitionTo("album")} />
         )}
 
         {stage === "album" && (
           <AlbumScreen
             onBack={() => transitionTo("letter")}
-            onFinish={() => transitionTo("counter")}
+            onFinish={() => transitionTo("openwhen")}
           />
         )}
-
+        {stage === "openwhen" && (
+          <OpenWhenScreen
+            onBack={() => transitionTo("album")}
+            onContinue={() => transitionTo("counter")}
+          />
+        )}
         {stage === "counter" && (
           <DaysCounterScreen
-            onBack={() => transitionTo("album")}
+            onBack={() => transitionTo("openwhen")}
             onContinue={() => transitionTo("final")}
           />
         )}

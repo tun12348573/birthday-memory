@@ -170,8 +170,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
         opacity: 1,
       });
     } else {
-
-    /* =====================================
+      /* =====================================
        PREVIOUS PAGE
        trái -> phải
     ===================================== */
@@ -879,7 +878,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
             disabled={turning}
             onClick={onFinish}
           >
-            Xem thời gian của chúng ta →
+            Một số lá thư nhỏ của anh →
           </button>
         ) : (
           /* =============================
