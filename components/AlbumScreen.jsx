@@ -45,16 +45,29 @@ export default function AlbumScreen({ onBack, onFinish }) {
   const [turning, setTurning] = useState(false);
 
   /* =========================================
+     PHOTO VIEWER STATE
+  ========================================= */
+
+  const [viewerOpen, setViewerOpen] = useState(false);
+
+  const [viewerIndex, setViewerIndex] = useState(0);
+
+  /* =========================================
      REFS
   ========================================= */
 
   const sceneRef = useRef(null);
 
-  // Tờ giấy dùng cho animation khi nhấn nút
+  // Animation lật trang bằng button
   const turnRef = useRef(null);
 
-  // Toàn bộ quyển album dùng cho swipe mobile
+  // Swipe mobile
   const bookRef = useRef(null);
+
+  // Viewer
+  const photoViewerRef = useRef(null);
+
+  const viewerImageRef = useRef(null);
 
   /* =========================================
      TOUCH / SWIPE REFS
@@ -68,9 +81,10 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
   /*
     null
-    "horizontal"
-    "vertical"
+    horizontal
+    vertical
   */
+
   const gestureDirection = useRef(null);
 
   /* =========================================
@@ -78,6 +92,32 @@ export default function AlbumScreen({ onBack, onFinish }) {
   ========================================= */
 
   const memory = memories[index];
+
+  /* =========================================
+     IMAGE DATA
+  ========================================= */
+
+  const imageList = Array.isArray(memory.images)
+    ? memory.images.filter(Boolean)
+    : [];
+
+  const imageCount = imageList.length;
+
+  /*
+    Nếu chỉ có 1 ảnh trong images
+    thì coi như ảnh đơn
+  */
+
+  const hasMultipleImages = imageCount > 1;
+
+  const singleImageSrc = imageCount === 1 ? imageList[0] : memory.image;
+
+  /* =========================================
+     VIEWER IMAGES
+  ========================================= */
+
+  const viewerImages =
+    imageList.length > 0 ? imageList : singleImageSrc ? [singleImageSrc] : [];
 
   /* =========================================
      ENTER ANIMATION
@@ -95,11 +135,120 @@ export default function AlbumScreen({ onBack, onFinish }) {
         opacity: 1,
         y: 0,
         scale: 1,
+
         duration: 0.95,
+
         ease: "back.out(1.25)",
       },
     );
   }, []);
+
+  /* =========================================
+     PHOTO VIEWER OPEN ANIMATION
+  ========================================= */
+
+  useEffect(() => {
+    if (!viewerOpen || !photoViewerRef.current) {
+      return;
+    }
+
+    gsap.fromTo(
+      photoViewerRef.current,
+      {
+        opacity: 0,
+        y: 30,
+        scale: 0.84,
+        rotation: -2,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+
+        duration: 0.48,
+
+        ease: "back.out(1.45)",
+      },
+    );
+  }, [viewerOpen]);
+
+  /* =========================================
+     PHOTO CHANGE ANIMATION
+  ========================================= */
+
+  useEffect(() => {
+    if (!viewerOpen || !viewerImageRef.current) {
+      return;
+    }
+
+    gsap.fromTo(
+      viewerImageRef.current,
+      {
+        opacity: 0,
+        scale: 0.97,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+
+        duration: 0.3,
+
+        ease: "power2.out",
+      },
+    );
+  }, [viewerIndex, viewerOpen]);
+
+  /* =========================================
+     PHOTO VIEWER KEYBOARD
+  ========================================= */
+
+  useEffect(() => {
+    if (!viewerOpen) {
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+
+    const handleKeyboard = (event) => {
+      /* ESC */
+
+      if (event.key === "Escape") {
+        closePhotoViewer();
+
+        return;
+      }
+
+      /* LEFT */
+
+      if (event.key === "ArrowLeft" && viewerImages.length > 1) {
+        previousPhoto();
+
+        return;
+      }
+
+      /* RIGHT */
+
+      if (event.key === "ArrowRight" && viewerImages.length > 1) {
+        nextPhoto();
+      }
+    };
+
+    /*
+      Không scroll website
+      khi đang xem ảnh lớn
+    */
+
+    document.body.style.overflow = "hidden";
+
+    window.addEventListener("keydown", handleKeyboard);
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+
+      window.removeEventListener("keydown", handleKeyboard);
+    };
+  }, [viewerOpen, viewerIndex, viewerImages.length]);
 
   /* =========================================
      SCROLL VỀ ĐẦU ALBUM
@@ -115,15 +264,86 @@ export default function AlbumScreen({ onBack, onFinish }) {
   };
 
   /* =========================================
+     OPEN PHOTO VIEWER
+  ========================================= */
+
+  const openPhotoViewer = (photoIndex = 0) => {
+    if (viewerImages.length === 0) {
+      return;
+    }
+
+    setViewerIndex(photoIndex);
+
+    setViewerOpen(true);
+  };
+
+  /* =========================================
+     CLOSE PHOTO VIEWER
+  ========================================= */
+
+  const closePhotoViewer = () => {
+    if (!photoViewerRef.current) {
+      setViewerOpen(false);
+
+      return;
+    }
+
+    gsap.to(photoViewerRef.current, {
+      opacity: 0,
+
+      y: 20,
+
+      scale: 0.92,
+
+      rotation: 1,
+
+      duration: 0.22,
+
+      ease: "power2.in",
+
+      onComplete: () => {
+        setViewerOpen(false);
+      },
+    });
+  };
+
+  /* =========================================
+     PREVIOUS PHOTO
+  ========================================= */
+
+  const previousPhoto = () => {
+    if (viewerImages.length <= 1) {
+      return;
+    }
+
+    setViewerIndex((current) =>
+      current === 0 ? viewerImages.length - 1 : current - 1,
+    );
+  };
+
+  /* =========================================
+     NEXT PHOTO
+  ========================================= */
+
+  const nextPhoto = () => {
+    if (viewerImages.length <= 1) {
+      return;
+    }
+
+    setViewerIndex((current) =>
+      current === viewerImages.length - 1 ? 0 : current + 1,
+    );
+  };
+
+  /* =========================================
      GO TO PAGE
-     Dùng cho:
-     - Trang trước
-     - Trang sau
-     - Dots
+     BUTTON / DOTS
   ========================================= */
 
   const goToPage = (targetIndex) => {
-    if (turning) return;
+    if (turning || viewerOpen) {
+      return;
+    }
 
     if (
       targetIndex < 0 ||
@@ -154,13 +374,13 @@ export default function AlbumScreen({ onBack, onFinish }) {
     }
 
     /* =====================================
-       NEXT PAGE
-       phải -> trái
+       NEXT
     ===================================== */
 
     if (direction > 0) {
       gsap.set(page, {
         left: "auto",
+
         right: 0,
 
         rotateY: 0,
@@ -170,12 +390,13 @@ export default function AlbumScreen({ onBack, onFinish }) {
         opacity: 1,
       });
     } else {
-      /* =====================================
-       PREVIOUS PAGE
-       trái -> phải
+
+    /* =====================================
+       PREVIOUS
     ===================================== */
       gsap.set(page, {
         left: 0,
+
         right: "auto",
 
         rotateY: 0,
@@ -187,7 +408,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
     }
 
     /* =====================================
-       PAGE TURN TIMELINE
+       PAGE TURN
     ===================================== */
 
     const timeline = gsap.timeline({
@@ -198,6 +419,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
           rotateY: 0,
 
           left: "auto",
+
           right: 0,
         });
 
@@ -213,18 +435,15 @@ export default function AlbumScreen({ onBack, onFinish }) {
       ease: "power2.inOut",
     });
 
-    /*
-      Đổi nội dung khi tờ giấy
-      đi qua giữa album
-    */
-
     timeline.call(
       () => {
         setIndex(targetIndex);
 
         scrollAlbumToTop();
       },
+
       [],
+
       0.43,
     );
   };
@@ -244,7 +463,9 @@ export default function AlbumScreen({ onBack, onFinish }) {
   const resetBookPosition = () => {
     const book = bookRef.current;
 
-    if (!book) return;
+    if (!book) {
+      return;
+    }
 
     gsap.killTweensOf(book);
 
@@ -264,14 +485,16 @@ export default function AlbumScreen({ onBack, onFinish }) {
   };
 
   /* =========================================
-     SWIPE PAGE CHANGE ANIMATION
+     SWIPE PAGE CHANGE
   ========================================= */
 
   const animateSwipePage = (targetIndex, direction) => {
-    if (turning) return;
+    if (turning || viewerOpen) {
+      return;
+    }
 
     /* =====================================
-       KHÔNG CÓ TRANG ĐỂ CHUYỂN
+       OUT OF RANGE
     ===================================== */
 
     if (targetIndex < 0 || targetIndex >= memories.length) {
@@ -294,16 +517,6 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
     gsap.killTweensOf(book);
 
-    /*
-      direction = 1
-      → Trang sau
-      → album bay sang trái
-
-      direction = -1
-      → Trang trước
-      → album bay sang phải
-    */
-
     const exitX = direction > 0 ? -150 : 150;
 
     const enterX = direction > 0 ? 105 : -105;
@@ -313,7 +526,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
     const enterRotation = direction > 0 ? 1 : -1;
 
     /* =====================================
-       ALBUM HIỆN TẠI BAY RA
+       CURRENT PAGE OUT
     ===================================== */
 
     gsap.to(book, {
@@ -330,25 +543,14 @@ export default function AlbumScreen({ onBack, onFinish }) {
       ease: "power2.in",
 
       onComplete: () => {
-        /* ===============================
-           ĐỔI MEMORY
-        =============================== */
-
         setIndex(targetIndex);
-
-        /* Cuộn về đầu album */
 
         scrollAlbumToTop();
 
-        /*
-          Chờ React render memory mới
-        */
-
         requestAnimationFrame(() => {
           /* =============================
-             ĐẶT MEMORY MỚI
-             Ở PHÍA ĐỐI DIỆN
-          ============================= */
+                 NEW PAGE START POSITION
+              ============================= */
 
           gsap.set(book, {
             x: enterX,
@@ -361,8 +563,8 @@ export default function AlbumScreen({ onBack, onFinish }) {
           });
 
           /* =============================
-             MEMORY MỚI TRƯỢT VÀO
-          ============================= */
+                 NEW PAGE ENTER
+              ============================= */
 
           gsap.to(book, {
             x: 0,
@@ -391,7 +593,9 @@ export default function AlbumScreen({ onBack, onFinish }) {
   ========================================= */
 
   const handleTouchStart = (event) => {
-    if (turning) return;
+    if (turning || viewerOpen) {
+      return;
+    }
 
     const touch = event.touches[0];
 
@@ -403,17 +607,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
     touchCurrentY.current = touch.clientY;
 
-    /*
-      Chưa biết người dùng muốn
-      scroll hay swipe
-    */
-
     gestureDirection.current = null;
-
-    /*
-      Nếu đang có animation đàn hồi
-      thì dừng lại ngay
-    */
 
     if (bookRef.current) {
       gsap.killTweensOf(bookRef.current);
@@ -422,11 +616,12 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
   /* =========================================
      TOUCH MOVE
-     ALBUM ĐI THEO NGÓN TAY
   ========================================= */
 
   const handleTouchMove = (event) => {
-    if (turning) return;
+    if (turning || viewerOpen) {
+      return;
+    }
 
     const touch = event.touches[0];
 
@@ -439,23 +634,13 @@ export default function AlbumScreen({ onBack, onFinish }) {
     const distanceY = touch.clientY - touchStartY.current;
 
     /* =====================================
-       XÁC ĐỊNH HƯỚNG GESTURE
-    ===================================== */
+         DETECT DIRECTION
+      ===================================== */
 
     if (gestureDirection.current === null) {
-      /*
-        Ngón tay mới di chuyển nhẹ
-        → chưa xử lý
-      */
-
       if (Math.abs(distanceX) < 10 && Math.abs(distanceY) < 10) {
         return;
       }
-
-      /*
-        Nếu di chuyển dọc nhiều hơn
-        → người dùng đang scroll
-      */
 
       if (Math.abs(distanceY) > Math.abs(distanceX)) {
         gestureDirection.current = "vertical";
@@ -463,18 +648,8 @@ export default function AlbumScreen({ onBack, onFinish }) {
         return;
       }
 
-      /*
-        Ngược lại:
-        → swipe ngang
-      */
-
       gestureDirection.current = "horizontal";
     }
-
-    /* =====================================
-       SCROLL DỌC
-       KHÔNG LÀM GÌ
-    ===================================== */
 
     if (gestureDirection.current !== "horizontal") {
       return;
@@ -482,23 +657,15 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
     const book = bookRef.current;
 
-    if (!book) return;
+    if (!book) {
+      return;
+    }
 
     /* =====================================
-       RESISTANCE
-    ===================================== */
+         RESISTANCE
+      ===================================== */
 
     let resistance = 0.44;
-
-    /*
-      Trang đầu:
-      kéo sang phải
-
-      Trang cuối:
-      kéo sang trái
-
-      → tăng lực cản
-    */
 
     if (
       (index === 0 && distanceX > 0) ||
@@ -507,36 +674,31 @@ export default function AlbumScreen({ onBack, onFinish }) {
       resistance = 0.14;
     }
 
-    /* =====================================
-       ALBUM DI CHUYỂN
-    ===================================== */
-
     let moveX = distanceX * resistance;
 
-    /*
-      Không cho kéo quá xa
-    */
+    moveX = Math.max(
+      -100,
 
-    moveX = Math.max(-100, Math.min(100, moveX));
-
-    /*
-      Album nghiêng nhẹ
-      theo hướng tay
-    */
+      Math.min(100, moveX),
+    );
 
     const rotation = moveX * 0.012;
 
-    /*
-      Thu nhỏ cực nhẹ
-    */
+    const scale =
+      1 -
+      Math.min(
+        Math.abs(moveX) / 6500,
 
-    const scale = 1 - Math.min(Math.abs(moveX) / 6500, 0.015);
+        0.015,
+      );
 
-    /*
-      Giảm opacity rất nhẹ
-    */
+    const opacity =
+      1 -
+      Math.min(
+        Math.abs(moveX) / 700,
 
-    const opacity = 1 - Math.min(Math.abs(moveX) / 700, 0.1);
+        0.1,
+      );
 
     gsap.set(book, {
       x: moveX,
@@ -554,11 +716,9 @@ export default function AlbumScreen({ onBack, onFinish }) {
   ========================================= */
 
   const handleTouchEnd = () => {
-    if (turning) return;
-
-    /* =====================================
-       KHÔNG PHẢI SWIPE NGANG
-    ===================================== */
+    if (turning || viewerOpen) {
+      return;
+    }
 
     if (gestureDirection.current !== "horizontal") {
       gestureDirection.current = null;
@@ -572,10 +732,6 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
     gestureDirection.current = null;
 
-    /* =====================================
-       KHOẢNG CÁCH SWIPE
-    ===================================== */
-
     const minimumSwipeDistance = 65;
 
     const isValidSwipe =
@@ -583,10 +739,9 @@ export default function AlbumScreen({ onBack, onFinish }) {
       Math.abs(distanceX) > Math.abs(distanceY) * 1.15;
 
     /* =====================================
-       SWIPE LEFT
-       ←
-       TRANG SAU
-    ===================================== */
+         SWIPE LEFT
+         NEXT
+      ===================================== */
 
     if (isValidSwipe && distanceX < 0 && index < memories.length - 1) {
       animateSwipePage(index + 1, 1);
@@ -595,21 +750,15 @@ export default function AlbumScreen({ onBack, onFinish }) {
     }
 
     /* =====================================
-       SWIPE RIGHT
-       →
-       TRANG TRƯỚC
-    ===================================== */
+         SWIPE RIGHT
+         PREVIOUS
+      ===================================== */
 
     if (isValidSwipe && distanceX > 0 && index > 0) {
       animateSwipePage(index - 1, -1);
 
       return;
     }
-
-    /* =====================================
-       KHÔNG ĐỦ XA
-       → ĐÀN HỒI VỀ
-    ===================================== */
 
     resetBookPosition();
   };
@@ -621,29 +770,10 @@ export default function AlbumScreen({ onBack, onFinish }) {
   const handleTouchCancel = () => {
     gestureDirection.current = null;
 
-    if (!turning) {
+    if (!turning && !viewerOpen) {
       resetBookPosition();
     }
   };
-
-  /* =========================================
-     IMAGE DATA
-  ========================================= */
-
-  const imageList = Array.isArray(memory.images)
-    ? memory.images.filter(Boolean)
-    : [];
-
-  const imageCount = imageList.length;
-
-  /*
-    Nếu chỉ có một ảnh trong images
-    → coi như ảnh đơn
-  */
-
-  const hasMultipleImages = imageCount > 1;
-
-  const singleImageSrc = imageCount === 1 ? imageList[0] : memory.image;
 
   /* =========================================
      GRID CLASS
@@ -699,7 +829,6 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
       {/* =====================================
           BOOK WRAPPER
-          SWIPE CHỈ HOẠT ĐỘNG Ở ĐÂY
       ===================================== */}
 
       <div
@@ -723,15 +852,14 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
             <p className="album-date">{memory.date}</p>
 
-            {/* ===============================
+            {/* =================================
                 POLAROID
-            =============================== */}
+            ================================= */}
 
             <div className="album-polaroid">
-              {/* =============================
+              {/* =================================
                   MULTIPLE IMAGES
-                  2 / 3 / 4
-              ============================= */}
+              ================================= */}
 
               {hasMultipleImages ? (
                 <div className={`album-photo-grid ${getGridClass()}`}>
@@ -740,27 +868,47 @@ export default function AlbumScreen({ onBack, onFinish }) {
                       key={`${memory.id}-${imgIndex}`}
                       className="album-grid-cell"
                     >
-                      <div className="album-grid-image">
+                      <button
+                        type="button"
+                        className="album-grid-image photo-clickable"
+                        aria-label={`Xem ảnh ${imgIndex + 1} lớn hơn`}
+                        onClick={() => openPhotoViewer(imgIndex)}
+                      >
                         <MemoryImage
                           src={img}
                           alt={`${memory.title} - ảnh ${imgIndex + 1}`}
                           number={imgIndex + 1}
                         />
-                      </div>
+
+                        <span className="photo-zoom-hint" aria-hidden="true">
+                          ⤢
+                        </span>
+                      </button>
                     </div>
                   ))}
                 </div>
               ) : (
-                /* ===========================
+                /* =================================
                    SINGLE IMAGE
-                =========================== */
+                ================================= */
 
                 <div className="album-photo">
-                  <MemoryImage
-                    src={singleImageSrc}
-                    alt={memory.title}
-                    number={index + 1}
-                  />
+                  <button
+                    type="button"
+                    className="single-photo-clickable photo-clickable"
+                    aria-label="Xem ảnh lớn"
+                    onClick={() => openPhotoViewer(0)}
+                  >
+                    <MemoryImage
+                      src={singleImageSrc}
+                      alt={memory.title}
+                      number={index + 1}
+                    />
+
+                    <span className="photo-zoom-hint" aria-hidden="true">
+                      ⤢
+                    </span>
+                  </button>
                 </div>
               )}
 
@@ -820,7 +968,6 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
           {/* =================================
               PAGE TURN ANIMATION
-              DÙNG KHI NHẤN BUTTON
           ================================= */}
 
           <div ref={turnRef} className="turning-sheet" aria-hidden="true">
@@ -836,9 +983,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
       ===================================== */}
 
       <div className="album-controls">
-        {/* =================================
-            PREVIOUS
-        ================================= */}
+        {/* PREVIOUS */}
 
         <button
           type="button"
@@ -849,9 +994,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
           ← Trang trước
         </button>
 
-        {/* =================================
-            DOTS
-        ================================= */}
+        {/* DOTS */}
 
         <div className="album-dots" aria-label="Vị trí trang">
           {memories.map((item, dotIndex) => (
@@ -881,10 +1024,6 @@ export default function AlbumScreen({ onBack, onFinish }) {
             Một số lá thư nhỏ của anh →
           </button>
         ) : (
-          /* =============================
-             NEXT PAGE
-          ============================= */
-
           <button
             type="button"
             className="album-nav"
@@ -895,6 +1034,95 @@ export default function AlbumScreen({ onBack, onFinish }) {
           </button>
         )}
       </div>
+
+      {/* =====================================
+          PHOTO VIEWER
+      ===================================== */}
+
+      {viewerOpen && viewerImages.length > 0 && (
+        <div className="photo-viewer-overlay" onClick={closePhotoViewer}>
+          <div
+            ref={photoViewerRef}
+            className="photo-viewer"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {/* =================================
+                CLOSE
+            ================================= */}
+
+            <button
+              type="button"
+              className="photo-viewer-close"
+              aria-label="Đóng ảnh"
+              onClick={closePhotoViewer}
+            >
+              ×
+            </button>
+
+            {/* =================================
+                POLAROID LARGE
+            ================================= */}
+
+            <div className="photo-viewer-polaroid">
+              <img
+                key={viewerImages[viewerIndex]}
+                ref={viewerImageRef}
+                src={viewerImages[viewerIndex]}
+                alt={`${memory.title} - ảnh ${viewerIndex + 1}`}
+                draggable={false}
+              />
+
+              <p>{memory.caption || "our memory ♡"}</p>
+            </div>
+
+            {/* =================================
+                PREVIOUS / NEXT PHOTO
+            ================================= */}
+
+            {viewerImages.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  className="photo-viewer-nav photo-viewer-prev"
+                  aria-label="Ảnh trước"
+                  onClick={previousPhoto}
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  className="photo-viewer-nav photo-viewer-next"
+                  aria-label="Ảnh tiếp theo"
+                  onClick={nextPhoto}
+                >
+                  ›
+                </button>
+              </>
+            )}
+
+            {/* =================================
+                COUNTER
+            ================================= */}
+
+            {viewerImages.length > 1 && (
+              <div className="photo-viewer-counter">
+                {viewerIndex + 1}
+
+                {" / "}
+
+                {viewerImages.length}
+              </div>
+            )}
+
+            {/* =================================
+                MOBILE HINT
+            ================================= */}
+
+            <div className="photo-viewer-hint">Chạm bên ngoài để đóng ♡</div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
