@@ -390,8 +390,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
         opacity: 1,
       });
     } else {
-
-    /* =====================================
+      /* =====================================
        PREVIOUS
     ===================================== */
       gsap.set(page, {
@@ -1046,9 +1045,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
             className="photo-viewer"
             onClick={(event) => event.stopPropagation()}
           >
-            {/* =================================
-                CLOSE
-            ================================= */}
+            {/* CLOSE */}
 
             <button
               type="button"
@@ -1059,28 +1056,12 @@ export default function AlbumScreen({ onBack, onFinish }) {
               ×
             </button>
 
-            {/* =================================
-                POLAROID LARGE
-            ================================= */}
+            {/* PHOTO + ARROWS */}
 
-            <div className="photo-viewer-polaroid">
-              <img
-                key={viewerImages[viewerIndex]}
-                ref={viewerImageRef}
-                src={viewerImages[viewerIndex]}
-                alt={`${memory.title} - ảnh ${viewerIndex + 1}`}
-                draggable={false}
-              />
+            <div className="photo-viewer-stage">
+              {/* PREVIOUS */}
 
-              <p>{memory.caption || "our memory ♡"}</p>
-            </div>
-
-            {/* =================================
-                PREVIOUS / NEXT PHOTO
-            ================================= */}
-
-            {viewerImages.length > 1 && (
-              <>
+              {viewerImages.length > 1 && (
                 <button
                   type="button"
                   className="photo-viewer-nav photo-viewer-prev"
@@ -1089,7 +1070,31 @@ export default function AlbumScreen({ onBack, onFinish }) {
                 >
                   ‹
                 </button>
+              )}
 
+              {/* POLAROID */}
+
+              <div className="photo-viewer-polaroid">
+                <div className="photo-viewer-image-wrap">
+                  <img
+                    key={viewerImages[viewerIndex]}
+                    ref={viewerImageRef}
+                    src={viewerImages[viewerIndex]}
+                    alt={`${memory.title} - ảnh ${viewerIndex + 1}`}
+                    draggable={false}
+                  />
+                </div>
+
+                {/* CAPTION */}
+
+                <p className="photo-viewer-caption">
+                  {memory.caption || "our memory ♡"}
+                </p>
+              </div>
+
+              {/* NEXT */}
+
+              {viewerImages.length > 1 && (
                 <button
                   type="button"
                   className="photo-viewer-nav photo-viewer-next"
@@ -1098,8 +1103,8 @@ export default function AlbumScreen({ onBack, onFinish }) {
                 >
                   ›
                 </button>
-              </>
-            )}
+              )}
+            </div>
 
             {/* =================================
                 COUNTER

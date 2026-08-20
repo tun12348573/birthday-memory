@@ -4611,15 +4611,462 @@ p {
     translateY(0);
 }
 
+/* =========================================================
+   NEW PHOTO VIEWER
+========================================================= */
 
-/* =========================================
-   PHOTO VIEWER OVERLAY
-========================================= */
+.photo-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+
+  background: rgba(65, 42, 50, 0.62);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* =========================================================
+   VIEWER
+========================================================= */
+
+.photo-viewer {
+  position: relative;
+
+  width: min(900px, 96vw);
+  height: min(760px, 92svh);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   CENTER AREA
+========================================================= */
+
+.photo-viewer-center {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   POLAROID
+========================================================= */
+
+.photo-viewer-polaroid {
+  position: relative;
+
+  width: min(520px, 72vw);
+
+  padding:
+    12px
+    12px
+    48px;
+
+  background: #fffdfa;
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 30px 80px
+    rgba(25, 15, 19, 0.32);
+
+  transform: rotate(-0.7deg);
+}
+
+
+/* =========================================================
+   IMAGE AREA
+========================================================= */
+
+.photo-viewer-image-wrap {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #f7ecef;
+}
+
+
+.photo-viewer-image-wrap img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-height: calc(82svh - 150px);
+
+  object-fit: contain;
+  object-position: center;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   CAPTION
+========================================================= */
+
+.photo-viewer-caption {
+  position: absolute;
+
+  left: 15px;
+  right: 15px;
+
+  bottom: 10px;
+
+  margin: 0;
+
+  text-align: center;
+
+  color: #a26077;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size: 25px;
+
+  line-height: 1.1;
+}
+
+
+/* =========================================================
+   INFO UNDER PHOTO
+========================================================= */
+
+.photo-viewer-info {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+}
+
+
+/* COUNTER */
+
+.photo-viewer-counter {
+  position: static;
+
+  transform: none;
+
+  min-width: 56px;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  color: #936374;
+
+  box-shadow:
+    0 6px 20px
+    rgba(40, 20, 28, 0.12);
+
+  text-align: center;
+
+  font-family:
+    var(--font-vietnamese),
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* HINT */
+
+.photo-viewer-hint {
+  position: static;
+
+  transform: none;
+
+  color: rgba(255, 255, 255, 0.78);
+
+  font-family:
+    var(--font-vietnamese),
+    sans-serif;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+  text-align: center;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.photo-viewer-close {
+  position: absolute;
+
+  z-index: 30;
+
+  top: 12px;
+  right: 35px;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  color: #915f72;
+
+  box-shadow:
+    0 8px 25px
+    rgba(38, 21, 27, 0.18);
+
+  cursor: pointer;
+
+  font-size: 27px;
+
+  line-height: 1;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.photo-viewer-close:hover {
+  transform: scale(1.08);
+
+  background: #fff;
+}
+
+
+/* =========================================================
+   PREVIOUS / NEXT
+========================================================= */
+
+.photo-viewer-nav {
+  position: absolute;
+
+  z-index: 25;
+
+  top: 50%;
+
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  transform: translateY(-50%);
+
+  background: rgba(255, 255, 255, 0.93);
+
+  color: #9a6579;
+
+  box-shadow:
+    0 8px 26px
+    rgba(37, 20, 27, 0.18);
+
+  cursor: pointer;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 34px;
+
+  line-height: 1;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.photo-viewer-nav:hover {
+  background: white;
+}
+
+
+.photo-viewer-prev {
+  left: 35px;
+}
+
+
+.photo-viewer-next {
+  right: 35px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .photo-viewer-overlay {
+    padding:
+      20px
+      8px;
+  }
+
+
+  .photo-viewer {
+    width: 100%;
+    height: 92svh;
+  }
+
+
+  .photo-viewer-center {
+    gap: 13px;
+  }
+
+
+  .photo-viewer-polaroid {
+    width: min(82vw, 390px);
+
+    padding:
+      8px
+      8px
+      42px;
+  }
+
+
+  .photo-viewer-image-wrap img {
+    max-height: calc(75svh - 100px);
+  }
+
+
+  .photo-viewer-caption {
+    bottom: 9px;
+
+    font-size: 21px;
+  }
+
+
+  .photo-viewer-close {
+    top: 15px;
+    right: 10px;
+
+    width: 39px;
+    height: 39px;
+
+    font-size: 24px;
+  }
+
+
+  .photo-viewer-nav {
+    width: 38px;
+    height: 38px;
+
+    font-size: 27px;
+  }
+
+
+  .photo-viewer-prev {
+    left: 4px;
+  }
+
+
+  .photo-viewer-next {
+    right: 4px;
+  }
+
+
+  .photo-viewer-counter {
+    padding:
+      6px
+      12px;
+
+    font-size: 10px;
+  }
+
+
+  .photo-viewer-hint {
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 390px) {
+
+  .photo-viewer-polaroid {
+    width: 80vw;
+  }
+
+
+  .photo-viewer-nav {
+    width: 35px;
+    height: 35px;
+  }
+
+
+  .photo-viewer-prev {
+    left: 1px;
+  }
+
+
+  .photo-viewer-next {
+    right: 1px;
+  }
+
+}
+
+/* =========================================================
+   FINAL PHOTO VIEWER FIX
+   DÁN Ở CUỐI CÙNG GLOBALS.CSS
+========================================================= */
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
 
 .photo-viewer-overlay {
   position: fixed;
 
-  z-index: 1000;
+  z-index: 99999;
 
   inset: 0;
 
@@ -4628,72 +5075,166 @@ p {
   align-items: center;
   justify-content: center;
 
-  padding: 25px;
+  padding: 30px 20px;
+
+  overflow: hidden;
 
   background:
-    rgba(67, 43, 51, .55);
+    rgba(
+      67,
+      42,
+      51,
+      0.62
+    );
 
-  backdrop-filter:
-    blur(18px);
+  backdrop-filter: blur(15px);
 
-  -webkit-backdrop-filter:
-    blur(18px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 
-/* =========================================
-   VIEWER
-========================================= */
+/* =========================================================
+   MAIN VIEWER
+========================================================= */
 
 .photo-viewer {
   position: relative;
 
-  width:
-    min(760px, 94vw);
+  width: min(
+    950px,
+    96vw
+  );
 
-  max-height:
-    94svh;
+  height: min(
+    820px,
+    94svh
+  );
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+}
+
+
+/* =========================================================
+   PHOTO STAGE
+========================================================= */
+
+.photo-viewer-stage {
+  position: relative;
+
+  width: 100%;
 
   display: flex;
 
   align-items: center;
   justify-content: center;
+
+  gap: 24px;
 }
 
 
-/* =========================================
+/* =========================================================
    POLAROID
-========================================= */
+========================================================= */
 
 .photo-viewer-polaroid {
-  width:
-    min(600px, 82vw);
+  position: relative;
+
+  width: fit-content;
+
+  max-width: min(
+    720px,
+    74vw
+  );
 
   padding:
-    14px 14px 52px;
+    10px
+    10px
+    48px;
 
-  background: #fff;
+  margin: 0;
 
-  box-shadow:
-    0 35px 100px
-    rgba(30, 17, 22, .35);
-
-  transform:
-    rotate(-1deg);
+  background:
+    #fffdfa;
 
   border-radius: 4px;
+
+  box-shadow:
+    0 30px 90px
+    rgba(
+      31,
+      18,
+      23,
+      0.34
+    );
+
+  transform:
+    rotate(-0.5deg);
 }
 
 
-.photo-viewer-polaroid img {
-  width: 100%;
+/* =========================================================
+   IMAGE WRAPPER
 
-  max-height:
-    calc(90svh - 110px);
+   Không ép ảnh vào khung rộng cố định nữa.
+   Ảnh dọc = khung dọc.
+   Ảnh ngang = khung ngang.
+========================================================= */
+
+.photo-viewer-image-wrap {
+  position: relative;
+
+  width: fit-content;
+
+  max-width: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background:
+    #f8edf0;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.photo-viewer-image-wrap img,
+.photo-viewer-polaroid img {
+  position: static;
+
+  inset: auto;
 
   display: block;
 
+  width: auto;
+  height: auto;
+
+  max-width: min(
+    700px,
+    72vw
+  );
+
+  max-height: 67svh;
+
   object-fit: contain;
+
+  object-position: center;
+
+  background: transparent;
 
   user-select: none;
 
@@ -4701,209 +5242,708 @@ p {
 }
 
 
-.photo-viewer-polaroid p {
-  margin:
-    14px 0 -35px;
+/* =========================================================
+   CAPTION
+========================================================= */
+
+.photo-viewer-caption,
+.photo-viewer-polaroid > p {
+  position: absolute;
+
+  left: 12px;
+  right: 12px;
+
+  bottom: 10px;
+
+  margin: 0;
 
   text-align: center;
 
-  color: #9a687a;
+  color: #a26077;
 
   font-family:
     var(--font-handwriting),
     cursive;
 
   font-size: 25px;
+
+  font-weight: 400;
+
+  line-height: 1.1;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 
-/* =========================================
-   CLOSE
-========================================= */
+/* =========================================================
+   INFO UNDER PHOTO
+========================================================= */
 
-.photo-viewer-close {
-  position: absolute;
+.photo-viewer-info {
+  position: relative;
 
-  z-index: 20;
+  display: flex;
 
-  top: -15px;
-  right: 15px;
+  flex-direction: column;
 
-  width: 44px;
-  height: 44px;
+  align-items: center;
+  justify-content: center;
 
-  display: grid;
+  gap: 6px;
 
-  place-items: center;
-
-  border: 0;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255,255,255,.92);
-
-  color: #855969;
-
-  box-shadow:
-    0 9px 25px
-    rgba(38,21,27,.2);
-
-  cursor: pointer;
-
-  font-size: 28px;
-
-  line-height: 1;
+  margin-top: 2px;
 }
 
 
-/* =========================================
-   ARROWS
-========================================= */
-
-.photo-viewer-nav {
-  position: absolute;
-
-  z-index: 20;
-
-  top: 50%;
-
-  width: 48px;
-  height: 48px;
-
-  display: grid;
-
-  place-items: center;
-
-  border: 0;
-
-  border-radius: 50%;
-
-  transform:
-    translateY(-50%);
-
-  background:
-    rgba(255,255,255,.88);
-
-  color: #925f72;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 9px 25px
-    rgba(38,21,27,.18);
-
-  font-size: 34px;
-
-  line-height: 1;
-}
-
-
-.photo-viewer-prev {
-  left: 0;
-}
-
-
-.photo-viewer-next {
-  right: 0;
-}
-
-
-/* =========================================
+/* =========================================================
    COUNTER
-========================================= */
+========================================================= */
 
 .photo-viewer-counter {
-  position: absolute;
+  position: static !important;
 
-  left: 50%;
-  bottom: -18px;
+  inset: auto !important;
 
-  transform:
-    translateX(-50%);
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+
+  transform: none !important;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 55px;
 
   padding:
-    7px 14px;
+    6px
+    13px;
+
+  margin: 0;
 
   border-radius: 999px;
 
   background:
-    rgba(255,255,255,.9);
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    );
 
-  color: #8e6473;
+  color: #925f72;
+
+  box-shadow:
+    0 6px 18px
+    rgba(
+      40,
+      22,
+      29,
+      0.14
+    );
 
   font-family:
     var(--font-vietnamese),
     sans-serif;
 
   font-size: 11px;
+
   font-weight: 700;
+
+  line-height: 1;
 }
 
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================================================
+   HINT
+========================================================= */
 
-@media (max-width: 600px) {
+.photo-viewer-hint {
+  position: static !important;
 
-  .photo-zoom-hint {
-    width: 28px;
-    height: 28px;
+  inset: auto !important;
 
-    right: 7px;
-    bottom: 7px;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: auto !important;
 
-    font-size: 14px;
+  transform: none !important;
 
-    opacity: .85;
+  width: auto;
 
-    transform: none;
-  }
+  margin: 0;
 
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.8
+    );
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  font-family:
+    var(--font-vietnamese),
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 400;
+
+  line-height: 1.4;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.photo-viewer-close {
+  position: absolute;
+
+  z-index: 50;
+
+  top: 8px;
+  right: 24px;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+
+  place-items: center;
+
+  padding: 0;
+
+  margin: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.95
+    );
+
+  color: #966377;
+
+  box-shadow:
+    0 8px 24px
+    rgba(
+      40,
+      21,
+      28,
+      0.18
+    );
+
+  cursor: pointer;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 25px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.photo-viewer-close:hover {
+  transform:
+    scale(1.08);
+
+  background:
+    #ffffff;
+}
+
+
+/* =========================================================
+   NAVIGATION BUTTON
+========================================================= */
+
+.photo-viewer-nav {
+  position: relative;
+
+  z-index: 30;
+
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+
+  flex:
+    0 0 auto;
+
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  transform: none;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    );
+
+  color: #9a6579;
+
+  box-shadow:
+    0 9px 27px
+    rgba(
+      39,
+      21,
+      28,
+      0.2
+    );
+
+  cursor: pointer;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 32px;
+
+  font-weight: 300;
+
+  line-height: 1;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.photo-viewer-nav:hover {
+  transform:
+    scale(1.08);
+
+  background:
+    #ffffff;
+}
+
+
+/* Reset rule cũ */
+
+.photo-viewer-prev {
+  position: relative;
+
+  left: auto;
+}
+
+
+.photo-viewer-next {
+  position: relative;
+
+  right: auto;
+}
+
+
+/* =========================================================
+   CLICKABLE PHOTO
+========================================================= */
+
+.photo-clickable {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+
+  overflow: hidden;
+
+  background:
+    transparent;
+
+  cursor:
+    zoom-in;
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+
+/* =========================================================
+   ZOOM ICON
+========================================================= */
+
+.photo-zoom-hint {
+  position: absolute;
+
+  z-index: 20;
+
+  right: 8px;
+  bottom: 8px;
+
+  width: 31px;
+  height: 31px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.88
+    );
+
+  color: #9c6478;
+
+  box-shadow:
+    0 5px 17px
+    rgba(
+      89,
+      52,
+      65,
+      0.15
+    );
+
+  backdrop-filter:
+    blur(6px);
+
+  -webkit-backdrop-filter:
+    blur(6px);
+
+  font-size: 15px;
+
+  opacity: 0;
+
+  transform:
+    translateY(5px);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+
+  pointer-events:
+    none;
+}
+
+
+.photo-clickable:hover
+.photo-zoom-hint {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 820px) {
 
   .photo-viewer-overlay {
     padding:
-      20px 8px;
+      20px
+      12px;
   }
 
 
   .photo-viewer {
     width: 100%;
+
+    height: 94svh;
+  }
+
+
+  .photo-viewer-stage {
+    gap: 12px;
   }
 
 
   .photo-viewer-polaroid {
-    width: 86vw;
+    max-width:
+      78vw;
 
     padding:
-      9px 9px 42px;
+      8px
+      8px
+      43px;
   }
 
 
-  .photo-viewer-polaroid p {
-    margin-bottom: -29px;
+  .photo-viewer-image-wrap img,
+  .photo-viewer-polaroid img {
+    max-width:
+      76vw;
 
-    font-size: 21px;
+    max-height:
+      66svh;
   }
 
 
-  .photo-viewer-close {
-    top: -18px;
-    right: 3px;
+  .photo-viewer-caption,
+  .photo-viewer-polaroid > p {
+    bottom: 9px;
 
-    width: 40px;
-    height: 40px;
-
-    font-size: 25px;
+    font-size: 22px;
   }
 
 
   .photo-viewer-nav {
-    width: 40px;
-    height: 40px;
+    width: 41px;
+    height: 41px;
 
     font-size: 28px;
+  }
+
+
+  .photo-viewer-close {
+    top: 8px;
+    right: 8px;
+  }
+
+
+  .photo-zoom-hint {
+    opacity: 0.85;
+
+    transform: none;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .photo-viewer-overlay {
+    padding:
+      14px
+      4px;
+  }
+
+
+  .photo-viewer {
+    width: 100%;
+
+    height: 96svh;
+
+    gap: 12px;
+  }
+
+
+  .photo-viewer-stage {
+    width: 100%;
+
+    gap: 0;
+  }
+
+
+  /* =========================================
+     POLAROID
+  ========================================= */
+
+  .photo-viewer-polaroid {
+    max-width:
+      82vw;
+
+    padding:
+      7px
+      7px
+      40px;
+
+    transform:
+      rotate(-0.3deg);
+  }
+
+
+  .photo-viewer-image-wrap img,
+  .photo-viewer-polaroid img {
+    max-width:
+      80vw;
+
+    max-height:
+      66svh;
+  }
+
+
+  .photo-viewer-caption,
+  .photo-viewer-polaroid > p {
+    left: 8px;
+    right: 8px;
+
+    bottom: 9px;
+
+    font-size: 20px;
+  }
+
+
+  /* =========================================
+     NAVIGATION
+  ========================================= */
+
+  .photo-viewer-nav {
+    position: absolute;
+
+    z-index: 35;
+
+    top: 50%;
+
+    width: 38px;
+    height: 38px;
+
+    transform:
+      translateY(-50%);
+
+    font-size: 27px;
+  }
+
+
+  .photo-viewer-nav:hover {
+    transform:
+      translateY(-50%)
+      scale(1.05);
+  }
+
+
+  .photo-viewer-prev {
+    left: 5px;
+  }
+
+
+  .photo-viewer-next {
+    right: 5px;
+  }
+
+
+  /* =========================================
+     CLOSE
+  ========================================= */
+
+  .photo-viewer-close {
+    top: 8px;
+    right: 8px;
+
+    width: 39px;
+    height: 39px;
+
+    font-size: 23px;
+  }
+
+
+  /* =========================================
+     INFO
+  ========================================= */
+
+  .photo-viewer-info {
+    gap: 6px;
+
+    margin-top: 1px;
+  }
+
+
+  .photo-viewer-counter {
+    min-width: 51px;
+
+    padding:
+      6px
+      11px;
+
+    font-size: 10px;
+  }
+
+
+  .photo-viewer-hint {
+    font-size: 10px;
+  }
+
+
+  .photo-zoom-hint {
+    right: 6px;
+    bottom: 6px;
+
+    width: 28px;
+    height: 28px;
+
+    font-size: 13px;
+
+    opacity: 0.88;
+
+    transform: none;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 390px) {
+
+  .photo-viewer-polaroid {
+    max-width:
+      84vw;
+  }
+
+
+  .photo-viewer-image-wrap img,
+  .photo-viewer-polaroid img {
+    max-width:
+      82vw;
+
+    max-height:
+      64svh;
+  }
+
+
+  .photo-viewer-nav {
+    width: 35px;
+    height: 35px;
+
+    font-size: 25px;
   }
 
 
@@ -4914,6 +5954,95 @@ p {
 
   .photo-viewer-next {
     right: 2px;
+  }
+
+
+  .photo-viewer-close {
+    width: 37px;
+    height: 37px;
+  }
+
+}
+
+
+/* =========================================================
+   SHORT SCREEN / LAPTOP
+========================================================= */
+
+@media (min-width: 601px) and (max-height: 800px) {
+
+  .photo-viewer-image-wrap img,
+  .photo-viewer-polaroid img {
+    max-height:
+      61vh;
+  }
+
+
+  .photo-viewer-polaroid {
+    padding-bottom:
+      43px;
+  }
+
+
+  .photo-viewer-info {
+    gap: 4px;
+  }
+
+}
+
+
+/* =========================================================
+   LANDSCAPE PHONE
+========================================================= */
+
+@media
+(max-width: 900px)
+and
+(orientation: landscape)
+and
+(max-height: 520px) {
+
+  .photo-viewer {
+    height: 96vh;
+  }
+
+
+  .photo-viewer-image-wrap img,
+  .photo-viewer-polaroid img {
+    max-height:
+      67vh;
+
+    max-width:
+      65vw;
+  }
+
+
+  .photo-viewer-polaroid {
+    max-width:
+      67vw;
+
+    padding-bottom:
+      36px;
+  }
+
+
+  .photo-viewer-caption,
+  .photo-viewer-polaroid > p {
+    font-size: 18px;
+
+    bottom: 7px;
+  }
+
+
+  .photo-viewer-info {
+    position: absolute;
+
+    bottom: 3px;
+  }
+
+
+  .photo-viewer-hint {
+    display: none;
   }
 
 }
