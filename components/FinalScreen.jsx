@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import FloatingDecor from "./FloatingDecor";
 
 export default function FinalScreen({ onRestart, onBack }) {
   const screenRef = useRef(null);
@@ -21,7 +22,7 @@ export default function FinalScreen({ onRestart, onBack }) {
           rotate: 0,
           duration: 1,
           ease: "elastic.out(1, 0.5)",
-        }
+        },
       );
 
       gsap.fromTo(
@@ -37,7 +38,7 @@ export default function FinalScreen({ onRestart, onBack }) {
           stagger: 0.13,
           delay: 0.25,
           ease: "power2.out",
-        }
+        },
       );
 
       gsap.to(".final-heart", {
@@ -64,39 +65,31 @@ export default function FinalScreen({ onRestart, onBack }) {
 
   return (
     <section ref={screenRef} className="final-screen">
+      <FloatingDecor variant="final" />
       <span className="final-sparkle sparkle-one">✦</span>
       <span className="final-sparkle sparkle-two">♡</span>
       <span className="final-sparkle sparkle-three">✿</span>
       <span className="final-sparkle sparkle-four">✧</span>
 
       <div className="final-card">
-        <div className="final-heart">
-          ♥
-        </div>
+        <div className="final-heart">♥</div>
 
         <div className="final-copy">
-          <p className="eyebrow center">
-            THE END... FOR NOW
-          </p>
+          <p className="eyebrow center">THE END... FOR NOW</p>
 
-          <h2>
-            Cảm ơn em vì đã xem hết câu chuyện này
-          </h2>
+          <h2>Cảm ơn em vì đã xem hết câu chuyện này</h2>
 
           <p className="final-handwriting">
             Nhưng câu chuyện của chúng ta thì vẫn còn tiếp tục...
           </p>
 
           <p className="final-message">
-            Anh mong rằng sau này chúng ta sẽ còn có thật nhiều
-            khoảnh khắc để thêm vào nơi này. Những chuyến đi mới,
-            những bức ảnh mới và thật nhiều ngày bình thường nhưng
-            đáng nhớ.
+            Anh mong rằng sau này chúng ta sẽ còn có thật nhiều khoảnh khắc để
+            thêm vào nơi này. Những chuyến đi mới, những bức ảnh mới và thật
+            nhiều ngày bình thường nhưng đáng nhớ.
           </p>
 
-          <div className="final-love">
-            Anh yêu em ♡
-          </div>
+          <div className="final-love">Anh yêu em ♡</div>
 
           <div className="final-actions">
             <button

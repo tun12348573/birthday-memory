@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import FloatingDecor from "./FloatingDecor";
 
 export default function LetterScreen({ onOpenAlbum }) {
   const wrapRef = useRef(null);
@@ -38,6 +39,7 @@ export default function LetterScreen({ onOpenAlbum }) {
 
   return (
     <section ref={wrapRef} className="letter-scene">
+      <FloatingDecor variant="letter" />
       <p className="eyebrow center">A LETTER FOR YOU</p>
       <h1 className="letter-main-title font-handwriting">
         Chúc mừng sinh nhật em yêu...

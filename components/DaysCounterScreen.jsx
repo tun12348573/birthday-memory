@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import FloatingDecor from "./FloatingDecor";
 
 // ĐỔI NGÀY NÀY thành ngày hai bạn bắt đầu.
 // Format: YYYY-MM-DDTHH:mm:ss
@@ -91,6 +92,7 @@ export default function DaysCounterScreen({ onContinue, onBack }) {
 
   return (
     <section ref={screenRef} className="days-counter-screen">
+      <FloatingDecor variant="counter" />
       <button className="counter-back-button" type="button" onClick={onBack}>
         ← Một số lá thư cho em
       </button>

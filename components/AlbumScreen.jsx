@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { memories } from "../data/memories";
+import FloatingDecor from "./FloatingDecor";
 
 /* =========================================
    IMAGE COMPONENT
@@ -796,6 +797,7 @@ export default function AlbumScreen({ onBack, onFinish }) {
 
   return (
     <section ref={sceneRef} className="album-scene">
+      <FloatingDecor variant="album" />
       {/* =====================================
           TOP BAR
       ===================================== */}

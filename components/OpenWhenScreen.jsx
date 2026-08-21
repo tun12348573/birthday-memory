@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import FloatingDecor from "./FloatingDecor";
 
 const openWhenLetters = [
   {
@@ -320,6 +321,7 @@ export default function OpenWhenScreen({ onBack, onContinue }) {
 
   return (
     <section ref={screenRef} className="openwhen-screen">
+      <FloatingDecor variant="openwhen" />
       {/* =====================================
           TOP BAR
       ===================================== */}

@@ -6046,3 +6046,128 @@ and
   }
 
 }
+
+/* =========================================================
+   FLOATING DECOR / MEMORIES
+========================================================= */
+
+.lock-scene,
+.letter-scene,
+.album-scene,
+.open-when-scene,
+.days-counter-scene,
+.counter-scene,
+.final-scene {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.lock-scene > *:not(.floating-decor),
+.letter-scene > *:not(.floating-decor),
+.album-scene > *:not(.floating-decor),
+.open-when-scene > *:not(.floating-decor),
+.days-counter-scene > *:not(.floating-decor),
+.counter-scene > *:not(.floating-decor),
+.final-scene > *:not(.floating-decor) {
+  position: relative;
+  z-index: 1;
+}
+
+.floating-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-decor-item {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: rgba(207, 133, 160, 0.62);
+  text-shadow: 0 4px 10px rgba(201, 136, 160, 0.12);
+
+  user-select: none;
+  pointer-events: none;
+
+  animation-name: floatingDecorMove;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.floating-decor-lock .floating-decor-item {
+  color: rgba(213, 138, 164, 0.58);
+}
+
+.floating-decor-letter .floating-decor-item {
+  color: rgba(201, 123, 152, 0.6);
+}
+
+.floating-decor-album .floating-decor-item {
+  color: rgba(208, 141, 167, 0.58);
+}
+
+.floating-decor-openwhen .floating-decor-item {
+  color: rgba(205, 136, 162, 0.58);
+}
+
+.floating-decor-counter .floating-decor-item {
+  color: rgba(212, 145, 168, 0.6);
+}
+
+.floating-decor-final .floating-decor-item {
+  color: rgba(220, 128, 160, 0.65);
+}
+
+@keyframes floatingDecorMove {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.35;
+  }
+
+  25% {
+    transform: translateY(-8px) rotate(4deg) scale(1.04);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: translateY(-14px) rotate(-3deg) scale(1);
+    opacity: 0.75;
+  }
+
+  75% {
+    transform: translateY(-7px) rotate(3deg) scale(0.98);
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 768px) {
+  .floating-decor-item {
+    opacity: 0.55;
+    filter: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-decor-item {
+    transform: scale(0.9);
+  }
+}
+
+.floating-decor-final .floating-decor-item:nth-child(odd) {
+  animation-duration: 6.2s !important;
+}
+
+.floating-decor-final .floating-decor-item:nth-child(even) {
+  animation-duration: 8.4s !important;
+}
