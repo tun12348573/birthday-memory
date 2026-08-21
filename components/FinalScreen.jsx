@@ -209,12 +209,6 @@ export default function FinalScreen({ onBack, onRestart }) {
               món quà nhỏ này của anh.
             </p>
 
-            <p className="ending-little-note">
-              Anh đã gom những điều anh muốn nhớ
-              <br />
-              vào một nơi nhỏ dành riêng cho em ♡
-            </p>
-
             <button
               type="button"
               className="ending-reveal-button"
