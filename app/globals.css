@@ -6171,3 +6171,29 @@ and
 .floating-decor-final .floating-decor-item:nth-child(even) {
   animation-duration: 8.4s !important;
 }
+
+/* =========================================================
+   PHOTO VIEWER PORTAL FIX
+========================================================= */
+
+body > .photo-viewer-overlay {
+  position: fixed !important;
+
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+
+  width: 100vw !important;
+
+  height: 100vh !important;
+  height: 100dvh !important;
+
+  z-index: 2147483000 !important;
+
+  margin: 0 !important;
+
+  transform: none !important;
+
+  overflow: hidden;
+}

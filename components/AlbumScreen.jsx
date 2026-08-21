@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { memories } from "../data/memories";
 import FloatingDecor from "./FloatingDecor";
+import { createPortal } from "react-dom";
 
 /* =========================================
    IMAGE COMPONENT
@@ -1035,101 +1036,100 @@ export default function AlbumScreen({ onBack, onFinish }) {
           </button>
         )}
       </div>
-
       {/* =====================================
-          PHOTO VIEWER
-      ===================================== */}
+    PHOTO VIEWER
+    PORTAL RA BODY
+===================================== */}
 
-      {viewerOpen && viewerImages.length > 0 && (
-        <div className="photo-viewer-overlay" onClick={closePhotoViewer}>
-          <div
-            ref={photoViewerRef}
-            className="photo-viewer"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {/* CLOSE */}
-
-            <button
-              type="button"
-              className="photo-viewer-close"
-              aria-label="Đóng ảnh"
-              onClick={closePhotoViewer}
+      {viewerOpen &&
+        viewerImages.length > 0 &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div className="photo-viewer-overlay" onClick={closePhotoViewer}>
+            <div
+              ref={photoViewerRef}
+              className="photo-viewer"
+              onClick={(event) => event.stopPropagation()}
             >
-              ×
-            </button>
+              {/* CLOSE */}
 
-            {/* PHOTO + ARROWS */}
+              <button
+                type="button"
+                className="photo-viewer-close"
+                aria-label="Đóng ảnh"
+                onClick={closePhotoViewer}
+              >
+                ×
+              </button>
 
-            <div className="photo-viewer-stage">
-              {/* PREVIOUS */}
+              {/* PHOTO STAGE */}
 
-              {viewerImages.length > 1 && (
-                <button
-                  type="button"
-                  className="photo-viewer-nav photo-viewer-prev"
-                  aria-label="Ảnh trước"
-                  onClick={previousPhoto}
-                >
-                  ‹
-                </button>
-              )}
+              <div className="photo-viewer-stage">
+                {/* PREVIOUS */}
 
-              {/* POLAROID */}
+                {viewerImages.length > 1 && (
+                  <button
+                    type="button"
+                    className="photo-viewer-nav photo-viewer-prev"
+                    aria-label="Ảnh trước"
+                    onClick={previousPhoto}
+                  >
+                    ‹
+                  </button>
+                )}
 
-              <div className="photo-viewer-polaroid">
-                <div className="photo-viewer-image-wrap">
-                  <img
-                    key={viewerImages[viewerIndex]}
-                    ref={viewerImageRef}
-                    src={viewerImages[viewerIndex]}
-                    alt={`${memory.title} - ảnh ${viewerIndex + 1}`}
-                    draggable={false}
-                  />
+                {/* POLAROID */}
+
+                <div className="photo-viewer-polaroid">
+                  <div className="photo-viewer-image-wrap">
+                    <img
+                      key={viewerImages[viewerIndex]}
+                      ref={viewerImageRef}
+                      src={viewerImages[viewerIndex]}
+                      alt={`${memory.title} - ảnh ${viewerIndex + 1}`}
+                      draggable={false}
+                    />
+                  </div>
+
+                  {/* CAPTION */}
+
+                  <p className="photo-viewer-caption">
+                    {memory.caption || "our memory ♡"}
+                  </p>
                 </div>
 
-                {/* CAPTION */}
+                {/* NEXT */}
 
-                <p className="photo-viewer-caption">
-                  {memory.caption || "our memory ♡"}
-                </p>
+                {viewerImages.length > 1 && (
+                  <button
+                    type="button"
+                    className="photo-viewer-nav photo-viewer-next"
+                    aria-label="Ảnh tiếp theo"
+                    onClick={nextPhoto}
+                  >
+                    ›
+                  </button>
+                )}
               </div>
 
-              {/* NEXT */}
+              {/* INFO */}
 
-              {viewerImages.length > 1 && (
-                <button
-                  type="button"
-                  className="photo-viewer-nav photo-viewer-next"
-                  aria-label="Ảnh tiếp theo"
-                  onClick={nextPhoto}
-                >
-                  ›
-                </button>
-              )}
+              <div className="photo-viewer-info">
+                {viewerImages.length > 1 && (
+                  <span className="photo-viewer-counter">
+                    {viewerIndex + 1} / {viewerImages.length}
+                  </span>
+                )}
+
+                <span className="photo-viewer-hint">
+                  Chạm bên ngoài để đóng ♡
+                </span>
+              </div>
             </div>
+          </div>,
 
-            {/* =================================
-                COUNTER
-            ================================= */}
-
-            {viewerImages.length > 1 && (
-              <div className="photo-viewer-counter">
-                {viewerIndex + 1}
-
-                {" / "}
-
-                {viewerImages.length}
-              </div>
-            )}
-
-            {/* =================================
-                MOBILE HINT
-            ================================= */}
-
-            <div className="photo-viewer-hint">Chạm bên ngoài để đóng ♡</div>
-          </div>
-        </div>
-      )}
+          document.body,
+        )}
     </section>
   );
 }
