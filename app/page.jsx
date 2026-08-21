@@ -11,6 +11,7 @@ import DaysCounterScreen from "../components/DaysCounterScreen";
 import FinalScreen from "../components/FinalScreen";
 import FloatingDecor from "../components/FloatingDecor";
 import MusicPlayer from "../components/MusicPlayer";
+import VoiceMessageScreen from "../components/VoiceMessageScreen";
 
 export default function Home() {
   const [stage, setStage] = useState("lock");
@@ -197,13 +198,18 @@ export default function Home() {
         {stage === "counter" && (
           <DaysCounterScreen
             onBack={() => transitionTo("openwhen")}
+            onContinue={() => transitionTo("voice")}
+          />
+        )}
+        {stage === "voice" && (
+          <VoiceMessageScreen
+            onBack={() => transitionTo("counter")}
             onContinue={() => transitionTo("final")}
           />
         )}
-
         {stage === "final" && (
           <FinalScreen
-            onBack={() => transitionTo("counter")}
+            onBack={() => transitionTo("voice")}
             onRestart={() => transitionTo("lock")}
           />
         )}

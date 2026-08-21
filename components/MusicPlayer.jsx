@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 export default function MusicPlayer({
@@ -10,6 +10,67 @@ export default function MusicPlayer({
   visible = true,
 }) {
   const discRef = useRef(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    let animationFrame = null;
+
+    const animateVolume = (targetVolume, duration = 400) => {
+      if (!audio) return;
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+
+      const startVolume = audio.volume;
+
+      const startTime = performance.now();
+
+      const updateVolume = (currentTime) => {
+        const elapsed = currentTime - startTime;
+
+        const progress = Math.min(elapsed / duration, 1);
+
+        const nextVolume =
+          startVolume + (targetVolume - startVolume) * progress;
+
+        audio.volume = Math.max(0, Math.min(1, nextVolume));
+
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(updateVolume);
+        }
+      };
+
+      animationFrame = requestAnimationFrame(updateVolume);
+    };
+
+    const handleVoiceDuck = (event) => {
+      const active = event.detail?.active;
+
+      /*
+      Voice đang phát
+      -> nhạc nền 12%
+
+      Voice dừng
+      -> nhạc nền 55%
+    */
+
+      animateVolume(active ? 0.12 : 0.55, 450);
+    };
+
+    window.addEventListener("voice-message-duck", handleVoiceDuck);
+
+    return () => {
+      window.removeEventListener("voice-message-duck", handleVoiceDuck);
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!discRef.current) return;

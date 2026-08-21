@@ -137,7 +137,7 @@ export default function DaysCounterScreen({ onContinue, onBack }) {
           type="button"
           onClick={onContinue}
         >
-          Đi đến lời cuối
+          Đi đến món quà tiếp theo
           <span>→</span>
         </button>
       </div>
