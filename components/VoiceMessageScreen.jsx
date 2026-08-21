@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
 import gsap from "gsap";
 import FloatingDecor from "./FloatingDecor";
 
@@ -11,9 +10,7 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
   const audioRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
-
   const [currentTime, setCurrentTime] = useState(0);
-
   const [duration, setDuration] = useState(0);
 
   /* =========================================================
@@ -29,14 +26,14 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
         {
           opacity: 0,
           y: 45,
-          scale: 0.94,
-          rotation: -1.5,
+          scale: 0.95,
+          rotate: -1.5,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          rotation: 0,
+          rotate: 0,
           duration: 0.9,
           ease: "back.out(1.35)",
         },
@@ -53,7 +50,7 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
           y: 0,
           duration: 0.65,
           stagger: 0.1,
-          delay: 0.25,
+          delay: 0.2,
           ease: "power2.out",
         },
       );
@@ -82,12 +79,6 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
 
   useEffect(() => {
     return () => {
-      /*
-        Khi rời khỏi màn Voice:
-        - dừng voice
-        - trả volume nhạc nền về bình thường
-      */
-
       const audio = audioRef.current;
 
       if (audio) {
@@ -110,13 +101,10 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
     if (audio.paused) {
       try {
         duckBackgroundMusic(true);
-
         await audio.play();
-
         setIsPlaying(true);
       } catch (error) {
-        console.error("Không thể phát voice message:", error);
-
+        console.error("Không thể phát piano message:", error);
         duckBackgroundMusic(false);
       }
 
@@ -124,9 +112,7 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
     }
 
     audio.pause();
-
     setIsPlaying(false);
-
     duckBackgroundMusic(false);
   };
 
@@ -158,9 +144,7 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
 
   const handleEnded = () => {
     setIsPlaying(false);
-
     setCurrentTime(0);
-
     duckBackgroundMusic(false);
   };
 
@@ -184,7 +168,6 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
     const nextTime = Number(event.target.value);
 
     audio.currentTime = nextTime;
-
     setCurrentTime(nextTime);
   };
 
@@ -198,7 +181,6 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
     }
 
     const minutes = Math.floor(seconds / 60);
-
     const remainingSeconds = Math.floor(seconds % 60);
 
     return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
@@ -208,7 +190,7 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
      NAVIGATION
   ========================================================= */
 
-  const stopVoice = () => {
+  const stopAudio = () => {
     const audio = audioRef.current;
 
     if (audio) {
@@ -216,19 +198,16 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
     }
 
     setIsPlaying(false);
-
     duckBackgroundMusic(false);
   };
 
   const handleBack = () => {
-    stopVoice();
-
+    stopAudio();
     onBack?.();
   };
 
   const handleContinue = () => {
-    stopVoice();
-
+    stopAudio();
     onContinue?.();
   };
 
@@ -255,154 +234,142 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
       ===================================================== */}
 
       <div className="voice-message-heading">
-        <p className="eyebrow center">A LITTLE VOICE FOR YOU</p>
+        <p className="eyebrow center">A LITTLE PIANO FOR YOU</p>
 
-        <h1 className="voice-message-title">Một món quà nho nhỏ...</h1>
+        <h1 className="voice-message-title">
+          Một bản nhạc anh chơi dành riêng cho em...
+        </h1>
 
         <p className="voice-message-description">
-          Anh muốn gửi em một bài nhạc đặc biệt
+          Không chỉ là một món quà,
           <br />
-          để chúc mừng ngày sinh nhật của em ♡
+          mà là một lời chúc sinh nhật anh muốn gửi đến em bằng những nốt nhạc ♡
         </p>
       </div>
 
       {/* =====================================================
-          CASSETTE CARD
+          MUSIC SHEET CARD
       ===================================================== */}
 
-      <div ref={cardRef} className="voice-cassette-card">
-        {/* TAPE LABEL */}
+      <div ref={cardRef} className="music-sheet-card">
+        {/* HEADER */}
 
-        <div className="voice-tape-label">
-          <span>FOR MIMI</span>
-
-          <small>one little song ♡</small>
+        <div className="music-sheet-top">
+          <span className="sheet-tag">FOR MIMI</span>
+          <span className="sheet-tag-hand">played by Tun ♡</span>
         </div>
 
-        {/* CASSETTE */}
+        {/* SHEET PAPER */}
 
-        <div className={`voice-cassette ${isPlaying ? "voice-playing" : ""}`}>
-          <div className="cassette-top-line">
-            <span>OUR MEMORY</span>
-
-            <span>SIDE A</span>
-          </div>
-
-          {/* WINDOW */}
-
-          <div className="cassette-window">
-            {/* LEFT REEL */}
-
-            <div className="cassette-reel">
-              <div className="reel-inner">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-
-            {/* TAPE MIDDLE */}
-
-            <div className="cassette-middle">
-              <span className="cassette-heart">♡</span>
-
-              <small>play me</small>
-            </div>
-
-            {/* RIGHT REEL */}
-
-            <div className="cassette-reel">
-              <div className="reel-inner">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-          </div>
-
-          {/* CASSETTE BOTTOM */}
-
-          <div className="cassette-bottom">
+        <div className="sheet-paper">
+          <div className="sheet-staff">
             <span />
-
-            <div className="cassette-bottom-window">
-              <i />
-
-              <i />
-            </div>
-
+            <span />
+            <span />
+            <span />
             <span />
           </div>
-        </div>
 
-        {/* =================================================
-            PLAYER
-        ================================================= */}
+          <div className="sheet-title-wrap">
+            <h2 className="sheet-title">Romantic Happy Birthday</h2>
+            <p className="sheet-subtitle">
+              A little piano message for your special day
+            </p>
+          </div>
 
-        <div className="voice-player">
-          <button
-            type="button"
-            className={`voice-play-button ${isPlaying ? "playing" : ""}`}
-            onClick={togglePlay}
-            aria-label={isPlaying ? "Tạm dừng lời nhắn" : "Phát lời nhắn"}
-          >
-            {isPlaying ? "Ⅱ" : "▶"}
-          </button>
+          <div className="sheet-notes-row">
+            <span>♪</span>
+            <span>♩</span>
+            <span>♫</span>
+            <span>♪</span>
+            <span>♬</span>
+          </div>
 
-          <div className="voice-player-content">
-            <div className="voice-player-title">
-              <div>
-                <strong>Bài nhạc dành cho em</strong>
+          {/* WAVEFORM */}
 
-                <small>from Tun ♡</small>
-              </div>
-
-              <span className={`voice-live-dot ${isPlaying ? "active" : ""}`}>
-                ●
-              </span>
-            </div>
-
-            {/* PROGRESS */}
-
-            <div className="voice-progress-area">
-              <input
-                type="range"
-                className="voice-progress"
-                min="0"
-                max={duration || 0}
-                step="0.01"
-                value={currentTime}
-                onChange={handleSeek}
-                aria-label="Tiến độ lời nhắn"
+          <div className={`piano-waveform ${isPlaying ? "playing" : ""}`}>
+            {Array.from({ length: 24 }).map((_, index) => (
+              <span
+                key={index}
+                className="wave-bar"
                 style={{
-                  "--voice-progress": `${progress}%`,
+                  animationDelay: `${index * 0.06}s`,
                 }}
               />
+            ))}
+          </div>
+
+          {/* PLAYER ROW */}
+
+          <div className="sheet-player-row">
+            <button
+              type="button"
+              className={`sheet-play-button ${isPlaying ? "playing" : ""}`}
+              onClick={togglePlay}
+              aria-label={isPlaying ? "Tạm dừng bản nhạc" : "Phát bản nhạc"}
+            >
+              {isPlaying ? "Ⅱ" : "▶"}
+            </button>
+
+            <div className="sheet-player-info">
+              <div className="sheet-player-title">
+                <div>
+                  <strong>Romantic Happy Birthday</strong>
+                  <small>piano version by Tun ♡</small>
+                </div>
+
+                <span className={`voice-live-dot ${isPlaying ? "active" : ""}`}>
+                  ●
+                </span>
+              </div>
+
+              <div className="voice-progress-area">
+                <input
+                  type="range"
+                  className="voice-progress"
+                  min="0"
+                  max={duration || 0}
+                  step="0.01"
+                  value={currentTime}
+                  onChange={handleSeek}
+                  aria-label="Tiến độ bản nhạc piano"
+                  style={{
+                    "--voice-progress": `${progress}%`,
+                  }}
+                />
+              </div>
+
+              <div className="voice-time-row">
+                <span>{formatTime(currentTime)}</span>
+                <span>{formatTime(duration)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* PIANO KEYS */}
+
+          <div className="mini-piano">
+            <div className="piano-white-keys">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <span key={`white-${index}`} className="white-key" />
+              ))}
             </div>
 
-            {/* TIME */}
-
-            <div className="voice-time-row">
-              <span>{formatTime(currentTime)}</span>
-
-              <span>{formatTime(duration)}</span>
+            <div className="piano-black-keys">
+              <span className="black-key key-1" />
+              <span className="black-key key-2" />
+              <span className="black-key key-4" />
+              <span className="black-key key-5" />
+              <span className="black-key key-6" />
+              <span className="black-key key-8" />
+              <span className="black-key key-9" />
             </div>
           </div>
         </div>
-
-        {/* =================================================
-            AUDIO
-        ================================================= */}
 
         <audio
           ref={audioRef}
-          src="/music/voice-message.mp3"
+          src="/music/romantic-happy-birthday.mp3"
           preload="metadata"
           onLoadedMetadata={handleLoadedMetadata}
           onTimeUpdate={handleTimeUpdate}
@@ -411,11 +378,9 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
           onPlay={handlePlay}
         />
 
-        {/* =================================================
-            NOTE
-        ================================================= */}
-
-        <p className="voice-small-note">Nhấn play rồi nghe đến cuối nhé ♡</p>
+        <p className="voice-small-note">
+          Bản này anh tự chơi để chúc mừng sinh nhật em ♡
+        </p>
       </div>
 
       {/* =====================================================
@@ -427,7 +392,7 @@ export default function VoiceMessageScreen({ onBack, onContinue }) {
         className="voice-continue-button"
         onClick={handleContinue}
       >
-        Một điều cuối cùng
+        Tiếp theo
         <span> →</span>
       </button>
     </section>

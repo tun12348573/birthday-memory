@@ -52,13 +52,13 @@ export default function MusicPlayer({
 
       /*
       Voice đang phát
-      -> nhạc nền 12%
+      -> nhạc nền 3%
 
       Voice dừng
       -> nhạc nền 55%
     */
 
-      animateVolume(active ? 0.12 : 0.55, 450);
+      animateVolume(active ? 0.03 : 0.55, 450);
     };
 
     window.addEventListener("voice-message-duck", handleVoiceDuck);
