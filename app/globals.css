@@ -6197,3 +6197,638 @@ body > .photo-viewer-overlay {
 
   overflow: hidden;
 }
+
+/* =========================================================
+   CINEMATIC ENDING SCREEN
+========================================================= */
+
+.ending-screen {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding: 40px 20px;
+
+  font-family:
+    var(--font-vietnamese),
+    sans-serif;
+
+  transition:
+    background 1.2s ease;
+}
+
+
+.ending-screen > *:not(.floating-decor) {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+.ending-back-button {
+  position: absolute !important;
+
+  top: 28px;
+  left: max(
+    22px,
+    calc((100vw - 1000px) / 2)
+  );
+
+  border: 0;
+
+  padding: 8px 0;
+
+  background: transparent;
+
+  color: #916978;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FIRST SCREEN
+========================================================= */
+
+.ending-intro {
+  width: 100%;
+}
+
+
+.ending-intro-content {
+  width: min(680px, 94vw);
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   HEART
+========================================================= */
+
+.ending-main-heart {
+  width: 82px;
+  height: 82px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  color: #fff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #df91ad,
+      #bd6686
+    );
+
+  box-shadow:
+    0 20px 50px
+    rgba(187, 93, 128, .24),
+    inset 0 0 0 6px
+    rgba(255,255,255,.14);
+
+  font-size: 30px;
+}
+
+
+/* =========================================================
+   INTRO TEXT
+========================================================= */
+
+.ending-eyebrow {
+  margin: 0 0 12px;
+
+  color: #b6798f;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: .25em;
+}
+
+
+.ending-title {
+  margin: 0;
+
+  color: #65434e;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size:
+    clamp(
+      58px,
+      7vw,
+      94px
+    );
+
+  font-weight: 400;
+
+  line-height: 1.05;
+}
+
+
+.ending-description {
+  margin: 24px auto 0;
+
+  color: #795c67;
+
+  font-size: 16px;
+
+  line-height: 1.85;
+}
+
+
+.ending-little-note {
+  margin: 22px auto 0;
+
+  color: #a77c8b;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   REVEAL BUTTON
+========================================================= */
+
+.ending-reveal-button {
+  margin-top: 34px;
+
+  border: 1px solid
+    rgba(191, 111, 141, .24);
+
+  border-radius: 999px;
+
+  padding:
+    14px
+    23px;
+
+  background:
+    rgba(255,255,255,.72);
+
+  color: #9d6279;
+
+  box-shadow:
+    0 13px 35px
+    rgba(129, 75, 95, .1);
+
+  cursor: pointer;
+
+  font-weight: 700;
+
+  transition:
+    transform .22s ease,
+    background .22s ease,
+    box-shadow .22s ease;
+}
+
+
+.ending-reveal-button:hover {
+  transform:
+    translateY(-2px);
+
+  background: #fff;
+
+  box-shadow:
+    0 18px 42px
+    rgba(129, 75, 95, .16);
+}
+
+
+/* =========================================================
+   FINAL MODE
+========================================================= */
+
+.ending-screen.ending-revealed {
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 244, 248, .94),
+      rgba(242, 191, 209, .72)
+    );
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.ending-final {
+  position: relative;
+
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+.ending-final-content {
+  position: relative;
+
+  z-index: 3;
+
+  width:
+    min(800px, 94vw);
+}
+
+
+/* =========================================================
+   GLOW
+========================================================= */
+
+.ending-final-glow {
+  position: absolute;
+
+  z-index: 0;
+
+  left: 50%;
+  top: 50%;
+
+  width: min(650px, 90vw);
+  height: min(650px, 90vw);
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.95),
+      rgba(255,230,239,.5) 42%,
+      transparent 72%
+    );
+
+  filter: blur(8px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   SMALL LABEL
+========================================================= */
+
+.ending-small-label {
+  margin: 0 0 38px;
+
+  color: #bb8196;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: .3em;
+}
+
+
+/* =========================================================
+   FINAL MESSAGE
+========================================================= */
+
+.ending-final-line {
+  margin: 0;
+
+  color: #75505d;
+}
+
+
+.ending-line-one {
+  margin-bottom: 14px;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size:
+    clamp(
+      38px,
+      5vw,
+      58px
+    );
+
+  line-height: 1.1;
+}
+
+
+.ending-line-main {
+  color: #5f3d49;
+
+  font-family:
+    var(--font-vietnamese),
+    sans-serif;
+
+  font-size:
+    clamp(
+      25px,
+      3vw,
+      42px
+    );
+
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+
+.ending-line-three {
+  margin-top: 9px;
+
+  color: #b46783;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size:
+    clamp(
+      55px,
+      7vw,
+      90px
+    );
+
+  line-height: 1.05;
+}
+
+
+/* =========================================================
+   FINAL HEART
+========================================================= */
+
+.ending-final-heart {
+  width: 54px;
+  height: 54px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 30px auto 20px;
+
+  border-radius: 50%;
+
+  color: #cf7797;
+
+  background:
+    rgba(255,255,255,.76);
+
+  box-shadow:
+    0 14px 38px
+    rgba(145, 81, 105, .14);
+
+  font-size: 21px;
+
+  animation:
+    endingHeartBeat
+    2.2s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes endingHeartBeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.08);
+  }
+
+  55% {
+    transform: scale(1);
+  }
+
+  65% {
+    transform: scale(1.04);
+  }
+
+}
+
+
+/* =========================================================
+   AFTER MESSAGE
+========================================================= */
+
+.ending-after-message {
+  margin: 0;
+
+  color: #9c6d7e;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size: 27px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.ending-final-actions {
+  margin-top: 37px;
+}
+
+
+.ending-restart-button {
+  border:
+    1px solid
+    rgba(184, 108, 137, .2);
+
+  border-radius: 999px;
+
+  padding:
+    12px
+    19px;
+
+  background:
+    rgba(255,255,255,.62);
+
+  color: #98687a;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    transform .2s ease,
+    background .2s ease;
+}
+
+
+.ending-restart-button:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    rgba(255,255,255,.95);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .ending-screen {
+    padding:
+      55px
+      16px
+      40px;
+  }
+
+
+  .ending-back-button {
+    top: 18px;
+    left: 16px;
+
+    font-size: 12px;
+  }
+
+
+  .ending-main-heart {
+    width: 68px;
+    height: 68px;
+
+    margin-bottom: 18px;
+
+    font-size: 25px;
+  }
+
+
+  .ending-title {
+    font-size:
+      clamp(
+        50px,
+        16vw,
+        68px
+      );
+  }
+
+
+  .ending-description {
+    margin-top: 20px;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+  }
+
+
+  .ending-little-note {
+    max-width: 310px;
+
+    font-size: 12px;
+  }
+
+
+  .ending-reveal-button {
+    margin-top: 28px;
+
+    padding:
+      12px
+      18px;
+
+    font-size: 12px;
+  }
+
+
+  .ending-small-label {
+    margin-bottom: 30px;
+  }
+
+
+  .ending-line-one {
+    font-size:
+      clamp(
+        36px,
+        11vw,
+        48px
+      );
+  }
+
+
+  .ending-line-main {
+    max-width: 330px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size:
+      clamp(
+        20px,
+        6.5vw,
+        27px
+      );
+
+    line-height: 1.45;
+  }
+
+
+  .ending-line-three {
+    margin-top: 13px;
+
+    font-size:
+      clamp(
+        52px,
+        17vw,
+        72px
+      );
+  }
+
+
+  .ending-final-heart {
+    width: 48px;
+    height: 48px;
+
+    margin:
+      26px auto 17px;
+  }
+
+
+  .ending-after-message {
+    font-size: 23px;
+  }
+
+
+  .ending-final-actions {
+    margin-top: 30px;
+  }
+
+}
