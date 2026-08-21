@@ -22,6 +22,9 @@ const vietnameseFont = Be_Vietnam_Pro({
 export const metadata = {
   title: "Our Memory",
   description: "Our little memory",
+  icons: {
+    icon: "/icon/heart-icon.png",
+  },
 };
 
 export const viewport = {
