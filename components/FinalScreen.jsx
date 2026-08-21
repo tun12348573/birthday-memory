@@ -201,7 +201,7 @@ export default function FinalScreen({ onBack, onRestart }) {
 
             <p className="ending-eyebrow">ONE LAST PAGE</p>
 
-            <h1 className="ending-title">Happy Birthday, em.</h1>
+            <h1 className="ending-title">Happy Birthday, Mimi.</h1>
 
             <p className="ending-description">
               Cảm ơn em vì đã xem hết
@@ -243,7 +243,7 @@ export default function FinalScreen({ onBack, onRestart }) {
             </p>
 
             <p className="ending-final-line ending-line-main">
-              người chúc em sinh nhật đầu tiên
+              người cùng em đón sinh nhật
             </p>
 
             <p className="ending-final-line ending-line-three">vẫn là anh.</p>
