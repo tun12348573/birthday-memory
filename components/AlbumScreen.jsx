@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { memories } from "../data/memories";
 import FloatingDecor from "./FloatingDecor";
 import { createPortal } from "react-dom";
+import HandwritingText from "./HandwritingText";
 
 /* =========================================
    IMAGE COMPONENT
@@ -55,6 +56,13 @@ export default function AlbumScreen({ onBack, onFinish }) {
   const [viewerIndex, setViewerIndex] = useState(0);
 
   /* =========================================
+     ALBUM TYPING STATE
+  ========================================= */
+
+  const [albumTypingStarted, setAlbumTypingStarted] = useState(false);
+  const [albumTypingStep, setAlbumTypingStep] = useState(0);
+
+  /* =========================================
      REFS
   ========================================= */
 
@@ -70,6 +78,11 @@ export default function AlbumScreen({ onBack, onFinish }) {
   const photoViewerRef = useRef(null);
 
   const viewerImageRef = useRef(null);
+
+  // Album typing
+  const albumTitleRef = useRef(null);
+  const albumNoteRef = useRef(null);
+  const albumSignatureRef = useRef(null);
 
   /* =========================================
      TOUCH / SWIPE REFS
@@ -144,6 +157,27 @@ export default function AlbumScreen({ onBack, onFinish }) {
       },
     );
   }, []);
+
+  /* =========================================
+     ALBUM TYPING
+     Mỗi lần sang memory mới:
+     - reset chữ
+     - chờ hiệu ứng lật trang ổn định
+     - bắt đầu viết title -> note -> signature
+  ========================================= */
+
+  useEffect(() => {
+    setAlbumTypingStarted(false);
+    setAlbumTypingStep(0);
+
+    const timer = window.setTimeout(() => {
+      setAlbumTypingStarted(true);
+    }, 450);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [memory.id]);
 
   /* =========================================
      PHOTO VIEWER OPEN ANIMATION
@@ -941,18 +975,78 @@ export default function AlbumScreen({ onBack, onFinish }) {
           <article className="album-leaf album-right-page">
             <span className="page-corner corner-right">✿</span>
 
-            <div className="memory-copy">
+            <div className="memory-copy" key={`memory-copy-${memory.id}`}>
+              {/* =================================
+                  MEMORY NUMBER
+                  Hiện cố định ngay từ đầu
+              ================================= */}
+
               <span className="memory-number">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
-              <h3>{memory.title}</h3>
+              {/* =================================
+                  TITLE
+                  Giữ sẵn vị trí cuối cùng,
+                  sau đó viết từng ký tự
+              ================================= */}
+
+              <HandwritingText
+                key={`album-title-${memory.id}`}
+                ref={albumTitleRef}
+                as="h3"
+                text={memory.title}
+                speed={48}
+                delay={120}
+                reserveSpace
+                start={albumTypingStarted && albumTypingStep >= 0}
+                showCursor={albumTypingStarted && albumTypingStep === 0}
+                onComplete={() => {
+                  setAlbumTypingStep(1);
+                }}
+              />
 
               <div className="mini-rule" />
 
-              <p>{memory.note}</p>
+              {/* =================================
+                  NOTE
+              ================================= */}
 
-              <p className="handwritten">— một mẩu ký ức của chúng ta ♡</p>
+              <HandwritingText
+                key={`album-note-${memory.id}`}
+                ref={albumNoteRef}
+                as="p"
+                className="memory-typing-note"
+                text={memory.note}
+                speed={21}
+                delay={260}
+                reserveSpace
+                start={albumTypingStarted && albumTypingStep >= 1}
+                showCursor={albumTypingStarted && albumTypingStep === 1}
+                onComplete={() => {
+                  setAlbumTypingStep(2);
+                }}
+              />
+
+              {/* =================================
+                  HANDWRITING END
+              ================================= */}
+
+              <HandwritingText
+                key={`album-signature-${memory.id}`}
+                ref={albumSignatureRef}
+                as="p"
+                className="handwritten font-handwriting"
+                text="— một mẩu ký ức của chúng ta ♡"
+                speed={42}
+                delay={320}
+                reserveSpace
+                start={albumTypingStarted && albumTypingStep >= 2}
+                showCursor={albumTypingStarted && albumTypingStep === 2}
+                onComplete={() => {
+                  setAlbumTypingStep(3);
+                }}
+              />
             </div>
 
             {/* STAMP */}

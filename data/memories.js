@@ -19,15 +19,15 @@ export const memories = [
   {
     id: 3,
     date: "KỶ NIỆM RIÊNG ĐẦU TIÊN",
-    title: "Buổi hẹn đầu tiên",
-    note: "Buổi hẹn đầu tiên của chúng ta thật đặc biệt, tuy vụng về và có chút gượng gạo nhưng lại rất đáng nhớ. Anh đã có một ngày vui vẻ và hạnh phúc khi được ở bên cạnh em.",
+    title: "Buổi hẹn hò đầu tiên",
+    note: "Buổi hẹn hò đầu tiên của chúng ta thật đặc biệt, tuy vụng về và có chút gượng gạo nhưng lại rất đáng nhớ. Anh đã có một ngày vui vẻ và hạnh phúc khi được ở bên cạnh em.",
     image: "/images/memory-3.jpg",
     caption: "still choosing you ♡",
   },
   {
     id: 4,
     date: "THE K",
-    title: "Lần đầu nắm tay",
+    title: "Lần đầu nắm tay em",
     note: "Tuy buổi hẹn hò đầu tiên anh còn hèn nhưng sang lần thứ 2 anh đã lấy hết dũng cảm đã nắm được tay của em. Hôm đó em rất xinh đẹp nhưng mà do anh chụp hình không đẹp nên không có hình để lưu lại hic.",
     image: "/images/memory-4.jpg",
     caption: "forever in my memory ♡",
