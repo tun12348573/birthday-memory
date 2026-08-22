@@ -9360,3 +9360,1469 @@ body > .photo-viewer-overlay {
     font-size: 18px;
   }
 }
+
+/* =========================================================
+   PIANO MESSAGE PRO
+========================================================= */
+
+.piano-message-screen {
+  position: relative;
+
+  min-height: 100svh;
+
+  padding:
+    68px
+    18px
+    65px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.piano-message-screen
+.voice-message-heading {
+  width:
+    min(
+      760px,
+      94vw
+    );
+
+  margin:
+    0
+    auto
+    30px;
+
+  text-align: center;
+}
+
+
+.piano-message-screen
+.voice-message-title {
+  margin:
+    11px
+    0
+    13px;
+
+  color: #684650;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size:
+    clamp(
+      45px,
+      5.5vw,
+      68px
+    );
+
+  font-weight: 400;
+
+  line-height: 1.05;
+}
+
+
+.piano-message-screen
+.voice-message-description {
+  margin: 0 auto;
+
+  color: #906d7a;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   MAIN GIFT CARD
+========================================================= */
+
+.piano-gift-card {
+  position: relative;
+
+  width:
+    min(
+      650px,
+      95vw
+    );
+
+  padding:
+    27px
+    28px
+    28px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      .92
+    );
+
+  border-radius: 30px;
+
+  background:
+    rgba(
+      255,
+      250,
+      248,
+      .78
+    );
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    0
+    32px
+    90px
+    rgba(
+      112,
+      65,
+      82,
+      .17
+    );
+
+  transition:
+    box-shadow
+    .5s
+    ease;
+}
+
+
+.piano-gift-card.is-playing {
+  box-shadow:
+    0
+    34px
+    95px
+    rgba(
+      172,
+      90,
+      121,
+      .21
+    );
+}
+
+
+/* =========================================================
+   PAPER CLIP
+========================================================= */
+
+.piano-paperclip {
+  position: absolute;
+
+  z-index: 10;
+
+  top: -14px;
+  right: 42px;
+
+  width: 19px;
+  height: 54px;
+
+  border:
+    2px solid
+    rgba(
+      158,
+      113,
+      129,
+      .5
+    );
+
+  border-radius:
+    12px
+    12px
+    7px
+    7px;
+
+  transform:
+    rotate(10deg);
+
+  pointer-events: none;
+}
+
+
+.piano-paperclip::after {
+  content: "";
+
+  position: absolute;
+
+  top: 5px;
+  left: 4px;
+
+  width: 7px;
+  height: 34px;
+
+  border:
+    1.5px solid
+    rgba(
+      158,
+      113,
+      129,
+      .35
+    );
+
+  border-radius:
+    8px;
+}
+
+
+/* =========================================================
+   TOP LABEL
+========================================================= */
+
+.piano-gift-top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 15px;
+}
+
+
+.piano-for-label {
+  color: #9d6e7e;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing:
+    .22em;
+}
+
+
+.piano-played-by {
+  color: #b17f90;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   SHEET
+========================================================= */
+
+.piano-sheet {
+  position: relative;
+
+  padding:
+    23px
+    22px
+    24px;
+
+  border:
+    1px solid
+    rgba(
+      187,
+      132,
+      152,
+      .17
+    );
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffdfa,
+      #fff8f6
+    );
+
+  box-shadow:
+    inset
+    0
+    0
+    0
+    4px
+    rgba(
+      255,
+      255,
+      255,
+      .4
+    ),
+    0
+    13px
+    34px
+    rgba(
+      98,
+      59,
+      73,
+      .08
+    );
+}
+
+
+/* PAPER TEXTURE */
+
+.piano-sheet::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius:
+    inherit;
+
+  pointer-events: none;
+
+  opacity: .16;
+
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent
+      4px,
+      rgba(
+        124,
+        88,
+        100,
+        .025
+      )
+      5px
+    );
+}
+
+
+/* =========================================================
+   TAPE
+========================================================= */
+
+.piano-sheet-tape {
+  position: absolute;
+
+  z-index: 4;
+
+  top: -10px;
+  left: 50%;
+
+  width: 87px;
+  height: 25px;
+
+  transform:
+    translateX(-50%)
+    rotate(-2deg);
+
+  background:
+    rgba(
+      238,
+      198,
+      209,
+      .54
+    );
+
+  clip-path:
+    polygon(
+      4% 7%,
+      100% 0,
+      95% 92%,
+      0 100%
+    );
+
+  backdrop-filter:
+    blur(3px);
+}
+
+
+/* =========================================================
+   MUSIC STAFF
+========================================================= */
+
+.piano-score-area {
+  position: relative;
+
+  height: 92px;
+
+  margin-bottom: 3px;
+
+  overflow: hidden;
+}
+
+
+.piano-staff-lines {
+  position: absolute;
+
+  top: 20px;
+  left: 0;
+  right: 0;
+
+  display: grid;
+
+  gap: 11px;
+}
+
+
+.piano-staff-lines i {
+  display: block;
+
+  height: 1px;
+
+  background:
+    rgba(
+      129,
+      93,
+      105,
+      .24
+    );
+}
+
+
+.piano-clef {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 4px;
+  left: 17px;
+
+  color:
+    rgba(
+      119,
+      80,
+      94,
+      .6
+    );
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 58px;
+
+  line-height: 1;
+}
+
+
+.piano-score-notes {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 17px;
+  left: 95px;
+  right: 23px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content:
+    space-around;
+
+  color:
+    rgba(
+      184,
+      106,
+      136,
+      .62
+    );
+
+  font-size: 22px;
+}
+
+
+.piano-score-notes
+span:nth-child(2) {
+  transform:
+    translateY(15px);
+}
+
+
+.piano-score-notes
+span:nth-child(3) {
+  transform:
+    translateY(-8px);
+}
+
+
+.piano-score-notes
+span:nth-child(4) {
+  transform:
+    translateY(19px);
+}
+
+
+.piano-score-notes
+span:nth-child(5) {
+  transform:
+    translateY(5px);
+}
+
+
+/* =========================================================
+   SHEET TITLE
+========================================================= */
+
+.piano-sheet-title {
+  position: relative;
+
+  z-index: 4;
+
+  margin:
+    -5px
+    auto
+    20px;
+
+  text-align: center;
+}
+
+
+.piano-sheet-title > p {
+  margin:
+    0
+    0
+    5px;
+
+  color: #b58b99;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing:
+    .24em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.piano-sheet-title h2 {
+  margin: 0;
+
+  color: #67454f;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size:
+    clamp(
+      34px,
+      5vw,
+      49px
+    );
+
+  font-weight: 400;
+
+  line-height: 1.05;
+}
+
+
+.piano-sheet-title small {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #a17a88;
+
+  font-size: 11px;
+
+  letter-spacing:
+    .03em;
+}
+
+
+/* =========================================================
+   REAL AUDIO WAVEFORM
+========================================================= */
+
+.piano-audio-waveform {
+  position: relative;
+
+  z-index: 4;
+
+  height: 67px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding:
+    0
+    12px;
+
+  margin:
+    0
+    auto
+    22px;
+
+  border:
+    1px solid
+    rgba(
+      194,
+      126,
+      151,
+      .1
+    );
+
+  border-radius: 16px;
+
+  background:
+    rgba(
+      252,
+      235,
+      241,
+      .55
+    );
+
+  overflow: hidden;
+}
+
+
+.piano-wave-bar {
+  width: 5px;
+
+  min-height: 8px;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #db9aae,
+      #bd6b89
+    );
+
+  opacity: .48;
+
+  transform-origin:
+    center;
+
+  transition:
+    height
+    .08s
+    linear,
+    opacity
+    .08s
+    linear;
+}
+
+
+/*
+  Fallback nếu Web Audio API
+  không được hỗ trợ
+*/
+
+.piano-audio-waveform
+.fallback-wave.is-playing
+.piano-wave-bar {
+  animation:
+    fallbackPianoWave
+    1s
+    ease-in-out
+    infinite;
+}
+
+
+.piano-audio-waveform
+.fallback-wave
+.piano-wave-bar:nth-child(3n) {
+  animation-delay:
+    .13s;
+}
+
+
+.piano-audio-waveform
+.fallback-wave
+.piano-wave-bar:nth-child(4n) {
+  animation-delay:
+    .28s;
+}
+
+
+@keyframes fallbackPianoWave {
+
+  0%,
+  100% {
+    height: 12px;
+  }
+
+  50% {
+    height: 42px;
+  }
+
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+.piano-player-row {
+  position: relative;
+
+  z-index: 4;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    1fr;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-bottom: 22px;
+}
+
+
+.piano-play-button {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      145deg,
+      #d1809e,
+      #b85f80
+    );
+
+  color: white;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 17px;
+
+  box-shadow:
+    0
+    12px
+    29px
+    rgba(
+      172,
+      84,
+      117,
+      .25
+    );
+
+  transition:
+    transform
+    .22s
+    ease,
+    box-shadow
+    .22s
+    ease;
+}
+
+
+.piano-play-button:hover {
+  transform:
+    scale(1.06);
+
+  box-shadow:
+    0
+    16px
+    35px
+    rgba(
+      172,
+      84,
+      117,
+      .32
+    );
+}
+
+
+.piano-play-button.playing {
+  animation:
+    pianoPlayPulse
+    2s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes pianoPlayPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0
+      12px
+      29px
+      rgba(
+        172,
+        84,
+        117,
+        .25
+      );
+  }
+
+  50% {
+    box-shadow:
+      0
+      12px
+      39px
+      rgba(
+        203,
+        111,
+        145,
+        .42
+      );
+  }
+
+}
+
+
+.piano-player-content {
+  min-width: 0;
+}
+
+
+.piano-player-title {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.piano-player-title
+strong {
+  display: block;
+
+  color: #674b55;
+
+  font-size: 13px;
+}
+
+
+.piano-player-title
+small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #ae7d8e;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size: 17px;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.piano-progress {
+  height: 5px;
+}
+
+
+/* =========================================================
+   PIANO
+========================================================= */
+
+.mini-piano-pro {
+  position: relative;
+
+  z-index: 4;
+
+  width:
+    min(
+      430px,
+      96%
+    );
+
+  height: 92px;
+
+  margin:
+    0
+    auto;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(
+      142,
+      99,
+      114,
+      .18
+    );
+
+  border-radius:
+    4px
+    4px
+    15px
+    15px;
+
+  background: #fff;
+
+  box-shadow:
+    inset
+    0
+    4px
+    11px
+    rgba(
+      91,
+      60,
+      70,
+      .055
+    );
+}
+
+
+.piano-white-keys-pro {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      12,
+      1fr
+    );
+
+  width: 100%;
+  height: 100%;
+}
+
+
+.piano-white-key-pro {
+  position: relative;
+
+  border-right:
+    1px solid
+    rgba(
+      167,
+      137,
+      147,
+      .32
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #fbf6f5
+    );
+
+  transition:
+    background
+    .12s
+    ease,
+    transform
+    .1s
+    ease,
+    box-shadow
+    .12s
+    ease;
+}
+
+
+.piano-white-key-pro:last-child {
+  border-right: 0;
+}
+
+
+/* PHÍM SÁNG THEO ÂM THANH */
+
+.piano-white-key-pro.audio-active {
+  transform:
+    translateY(2px);
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff,
+      #f8dce6
+    );
+
+  box-shadow:
+    inset
+    0
+    -17px
+    23px
+    rgba(
+      213,
+      132,
+      162,
+      .23
+    ),
+    inset
+    0
+    3px
+    7px
+    rgba(
+      163,
+      94,
+      120,
+      .08
+    );
+}
+
+
+/* =========================================================
+   BLACK KEYS
+========================================================= */
+
+.piano-black-keys-pro {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 58px;
+
+  pointer-events: none;
+}
+
+
+.piano-black-key-pro {
+  position: absolute;
+
+  top: 0;
+
+  width: 22px;
+  height: 58px;
+
+  border-radius:
+    0
+    0
+    7px
+    7px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #493a3f,
+      #21191c
+    );
+
+  box-shadow:
+    0
+    5px
+    9px
+    rgba(
+      38,
+      26,
+      30,
+      .25
+    );
+}
+
+
+/* =========================================================
+   HEART
+========================================================= */
+
+.piano-key-heart {
+  position: absolute;
+
+  z-index: 10;
+
+  right: 9px;
+  bottom: 5px;
+
+  color:
+    rgba(
+      197,
+      105,
+      139,
+      .58
+    );
+
+  font-size: 14px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   SMALL NOTE
+========================================================= */
+
+.piano-sheet-note {
+  position: relative;
+
+  z-index: 4;
+
+  margin:
+    21px
+    auto
+    0;
+
+  text-align: center;
+
+  color: #aa788a;
+
+  font-family:
+    var(--font-handwriting),
+    cursive;
+
+  font-size: 21px;
+
+  line-height: 1.35;
+}
+
+
+/* =========================================================
+   FLOATING NOTES
+========================================================= */
+
+.piano-floating-notes {
+  position: absolute;
+
+  z-index: 1;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+
+.piano-floating-notes
+span {
+  position: absolute;
+
+  left:
+    var(
+      --note-left
+    );
+
+  bottom: 13%;
+
+  color:
+    rgba(
+      191,
+      106,
+      138,
+      .5
+    );
+
+  font-size: 22px;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px)
+    rotate(-6deg);
+}
+
+
+.piano-floating-notes.is-playing
+span {
+  animation:
+    pianoNoteFloat
+    var(
+      --note-duration
+    )
+    ease-in
+    var(
+      --note-delay
+    )
+    infinite;
+}
+
+
+@keyframes pianoNoteFloat {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(15px)
+      rotate(-7deg)
+      scale(.85);
+  }
+
+  18% {
+    opacity: .65;
+  }
+
+  70% {
+    opacity: .4;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(-410px)
+      translateX(20px)
+      rotate(17deg)
+      scale(1.15);
+  }
+
+}
+
+
+/* =========================================================
+   CONTINUE
+========================================================= */
+
+.piano-continue-button {
+  margin-top: 27px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .piano-message-screen {
+    justify-content:
+      flex-start;
+
+    padding:
+      64px
+      10px
+      calc(
+        115px +
+        env(
+          safe-area-inset-bottom
+        )
+      );
+  }
+
+
+  .piano-message-screen
+  .voice-message-heading {
+    margin-bottom:
+      23px;
+  }
+
+
+  .piano-message-screen
+  .voice-message-title {
+    font-size:
+      clamp(
+        39px,
+        12vw,
+        54px
+      );
+  }
+
+
+  .piano-message-screen
+  .voice-message-description {
+    max-width:
+      340px;
+
+    font-size:
+      13px;
+  }
+
+
+  .piano-gift-card {
+    width: 100%;
+
+    padding:
+      22px
+      14px
+      20px;
+
+    border-radius:
+      24px;
+  }
+
+
+  .piano-gift-top {
+    padding:
+      0
+      4px;
+  }
+
+
+  .piano-played-by {
+    font-size:
+      16px;
+  }
+
+
+  .piano-sheet {
+    padding:
+      19px
+      12px
+      20px;
+  }
+
+
+  .piano-score-area {
+    height:
+      80px;
+  }
+
+
+  .piano-clef {
+    left: 8px;
+
+    font-size:
+      50px;
+  }
+
+
+  .piano-score-notes {
+    left: 74px;
+
+    font-size:
+      19px;
+  }
+
+
+  .piano-sheet-title h2 {
+    font-size:
+      clamp(
+        31px,
+        9vw,
+        41px
+      );
+  }
+
+
+  .piano-audio-waveform {
+    height:
+      59px;
+
+    gap: 3px;
+
+    padding:
+      0
+      7px;
+  }
+
+
+  .piano-wave-bar {
+    width: 4px;
+  }
+
+
+  .piano-player-row {
+    gap: 12px;
+  }
+
+
+  .piano-play-button {
+    width: 52px;
+    height: 52px;
+  }
+
+
+  .mini-piano-pro {
+    width: 100%;
+
+    height: 78px;
+  }
+
+
+  .piano-black-keys-pro {
+    height: 49px;
+  }
+
+
+  .piano-black-key-pro {
+    width: 18px;
+    height: 49px;
+  }
+
+
+  .piano-sheet-note {
+    font-size: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 390px) {
+
+  .piano-gift-card {
+    padding:
+      20px
+      10px;
+  }
+
+
+  .piano-sheet {
+    padding:
+      18px
+      9px;
+  }
+
+
+  .piano-for-label {
+    font-size: 8px;
+  }
+
+
+  .piano-played-by {
+    font-size: 15px;
+  }
+
+
+  .piano-player-title
+  strong {
+    font-size: 11px;
+  }
+
+
+  .piano-player-title
+  small {
+    font-size: 15px;
+  }
+
+
+  .piano-play-button {
+    width: 47px;
+    height: 47px;
+  }
+
+
+  .piano-audio-waveform {
+    gap: 2.5px;
+  }
+
+
+  .piano-wave-bar {
+    width: 3px;
+  }
+
+}
